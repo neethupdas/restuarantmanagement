@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        function cnameval()
+            {
+                //alert("enter user");
+                var name=document.getElementById('name').value;
+                var errorMessage=document.getElementById('up');
+
+                var spaceRegex = /^\s*$/;
+
+                const btn=document.getElementById('btn');
+                if(name==null || name=="")
+                {
+                    document.getElementById('up').innerHTML="Category name can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(name)) {
+                    document.getElementById('up').innerHTML="Category name can't be null";
+                    btn.disabled=true;
+                }
+                else if(name.length<3)
+                {
+                    document.getElementById('up').innerHTML='Category name must be at least 3 characters long';
+                    btn.disabled=true;
+                }
+                else if((name.replace(/[^0-9]/g,"").length) > ((name.length)-2))
+                {
+                    document.getElementById('up').innerHTML='Category name must contains at least 2 alphebets';
+                    btn.disabled=true;
+                }
+                else if(name.length >25)
+                {
+                    document.getElementById('up').innerHTML = 'Category name must be less than 25 characters'; // Clear the error message
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('up').innerHTML="";
+                    btn.disabled=false;
+                }
+            }
+    </script>
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        <div id="logout">
+            <h3>
+            {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            {% endif %}
+            </h3><br><br>
+        </div>
+        <form action="" name="addcategory" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <center><b><font size="+1" color="white" border=1px solid black>Add Category</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages" id="msg" >
+                        <center><font style="color:white;">{{message}}</font></center>
+                    </div>
+                    <script>
+                        // Add JavaScript to hide the message after 5 seconds
+                        setTimeout(function () 
+                        {
+                            var messagesContainer = document.querySelector('.messages');
+                            if (messagesContainer) 
+                            {
+                                messagesContainer.style.display = 'none';                                  
+                            }
+                        }, 3000); // 5000 milliseconds = 5 seconds   
+                    </script>
+                {% endfor %}     
+            {% endif %}
+            
+            
+            <label for="name">Item name:</label>
+            <input type="text" name="name" id="name" oninput="cnameval()" Required><br>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+            
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button></center>
+            <br>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <style>
+            body
+            {
+                background-image:url("{% static 'myimages/bg3.jpg'%}");
+                background-size:100%;
+            }
+            form
+			{
+				border:1px solid black;
+				width:50%;
+                height:20%;
+				background-color:#343230;
+                padding:4% 5%;   
+			}
+            .div1
+            {
+                
+                padding:5% 30%;
+            }
+            input[type=email]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=password]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            label
+            {
+                font-size:100%;
+                color:#F3B820;
+            }
+            button
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:35%;
+                color:black;
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+                //alert("Enter")
+            }
+        </script>
+            <div class="div1">
+                <form action="" name="loginform" method='POST'>
+                    {% csrf_token %}
+
+
+                    <center>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="messages" id="msg">
+                                <font size="+0" style="color:white;">{{message}}</font>
+                            </div>
+                            <script>
+                                // Add JavaScript to hide the message after 5 seconds
+                                setTimeout(function () {
+                                    var messagesContainer = document.querySelector('.messages');
+                                    if (messagesContainer) {
+                                        messagesContainer.style.display = 'none';
+                                    }
+                                }, 3000); // 5000 milliseconds = 5 seconds
+                            </script>
+                        {% endfor %}
+                    {% endif %}
+                    </center>
+
+                    <center><b><font size="+2" color="white">Login</font></b><br></center><br>
+                    <label for="username">Username:</label>
+                    <p style="color:white"><input type="email" name="username" id="username" Required></p>
+                    <br>
+                    
+                    <label for="password">Password:</label><br>
+                    <input type="password" name="password" id="password" Required>
+                    <br><br>
+                    <center><a href="{% url 'reset_password' %}" style="color:#F3B820;"><font size="+1">Forgot Password</font></a></center><br>
+                    <center><button type="submit" onclick="valid()"><font style="color:black;">SignIn</font></button></center><br>
+                    <center><a href="{% url 'signup' %}" style="color:#F3B820;"><font size="+1">New user? Signup</font></a></center><br>
+                    {% comment %} <center><a href="{% provider_login_url 'google' %}"><img src="{% static 'myimages/continuewithg.png'%}" width="70%"></a></center> {% endcomment %}
+                </form>
+            </div>Shedz
+        <script src="" async defer></script>
+    </body>
+</html>

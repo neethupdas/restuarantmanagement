@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        textarea
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 5px;
+        }
+    </style>
+
+    <script>
+        function iname()
+            {
+                //alert("enter user");
+                var name=document.getElementById('name').value;
+                var errorMessage=document.getElementById('up');
+                var price=document.getElementById('price')
+                var spaceRegex = /^\s*$/;
+
+                const btn=document.getElementById('btn');
+                if(name==null || name=="")
+                {
+                    document.getElementById('up').innerHTML="Item name can't be null"
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(spaceRegex.test(name)) {
+                    document.getElementById('up').innerHTML="Item name can't be null";
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(name.length<3)
+                {
+                    document.getElementById('up').innerHTML='Item name must be at least 3 characters long';
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if((name.replace(/[^0-9]/g,"").length) > ((name.length)-2))
+                {
+                    document.getElementById('up').innerHTML='Item name must contains at least 2 alphebets';
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(name.length >50)
+                {
+                    document.getElementById('up').innerHTML = 'Item name must be less than 25 characters'; // Clear the error message
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('up').innerHTML="";
+                    btn.disabled=false;
+                    price.disabled=false;
+                }
+            }
+        function dval()
+            {
+                //alert("enter user");
+                var dname=document.getElementById('description').value;
+                var errorMessage=document.getElementById('dp');
+                var regex = /^\s*$/;
+                const btn=document.getElementById('btn');
+                var price=document.getElementById('price')
+                if(dname==null || dname=="")
+                {
+                    document.getElementById('dp').innerHTML="Description can't be null"
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(regex.test(dname)) {
+                    document.getElementById('dp').innerHTML="Description can't be null";
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(dname.length<10)
+                {
+                    document.getElementById('dp').innerHTML='Description must be at least 10 characters long';
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if((dname.replace(/[^0-9]/g,"").length) > ((dname.length)-2))
+                {
+                    document.getElementById('dp').innerHTML='Description must contains at least 2 alphebets';
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else if(dname.length >200)
+                {
+                    document.getElementById('dp').innerHTML = 'Description must be less than 100 characters'; // Clear the error message
+                    btn.disabled=true;
+                    price.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('dp').innerHTML="";
+                    btn.disabled=false;
+                    price.disabled=false;
+                }
+
+                
+        }    
+        function pval()
+        {
+                var price=document.getElementById('price').value;
+                var errorMessage=document.getElementById('pp');
+                var spaceRegex = /^\s*$/;
+                const btn=document.getElementById('btn');
+                if(price==null || price=="")
+                {
+                    document.getElementById('pp').innerHTML="Price can't be null"
+                    btn.disabled=true;
+                }
+                else if(price<5)
+                {
+                    document.getElementById('pp').innerHTML="Enter a valid price"
+                    btn.disabled=true;
+                }
+                else if(price>1000)
+                {
+                    document.getElementById('pp').innerHTML="Enter a valid price"
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('pp').innerHTML=""
+                    btn.disabled=false;
+                } 
+        }
+        function validateFile() {
+            var fileInput = document.getElementById('image');
+            var fileError = document.getElementById('fileError');
+        
+            // Check if a file is selected
+            if (fileInput.files.length === 0) {
+                fileError.innerHTML = 'Please select an image file.';
+                fileInput.setCustomValidity('Please select an image file.');
+            } else {
+                // Get the file type
+                var fileType = fileInput.files[0].type;
+        
+                // Check if the file type is an image
+                if (fileType.startsWith('image/')) {
+                    fileError.innerHTML = '';
+                    fileInput.setCustomValidity('');
+                } else {
+                    fileError.innerHTML = 'Invalid file type. Please select an image file.';
+                    fileInput.setCustomValidity('Invalid file type. Please select an image file.');
+                }
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        <div id="logout">
+            <h3>
+            {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            {% endif %}
+            </h3><br><br>
+        </div>
+        <form action="" name="additem" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <center><b><font size="+1" color="white" border=1px solid black>Add Item</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                        {% for message in messages %}
+                            <div class="messages" id="msg" >
+                                <center><font style="color:white;">{{message}}</font></center>
+                            </div>
+                            <script>
+                                // Add JavaScript to hide the message after 5 seconds
+                                setTimeout(function () {
+                                    var messagesContainer = document.querySelector('.messages');
+                                    if (messagesContainer) {
+                                        messagesContainer.style.display = 'none';
+                                    }
+                                }, 3000); // 5000 milliseconds = 5 seconds
+                            </script>
+                        {% endfor %}
+                        
+                    {% endif %}
+
+            <label for="cat">Choose category:</label>
+            
+            <select name="cat" id="cat" oninput="">
+                {% for item in category %}
+                    <option value="{{item.cname}}">{{item.cname}}</option>
+                {% endfor %}
+            </select><br><br>
+
+
+
+
+            <label for="subcat">Choose subcategory:</label>
+            <select name="subcat" id="subcat" disabled>
+                <option value="">Select subcategory</option>
+            </select><br><br>
+
+
+
+            <label for="name">Item name:</label>
+            <input type="text" name="name" id="name" oninput="iname()" Required><br>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="description">description:</label>
+            <textarea name="description" id="description" rows="4" oninput="dval()" Required></textarea>
+            <p id="dp" style="color: #f7e6b5; font-size:75%"></p>
+            <br>
+            <label for="image">Select an Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" onchange="validateFile()" Required><br>
+            <p id="fileError" style="color: #f7e6b5; font-size: 75%;"></p><br>
+            
+            <label for="price">Price(Rupees)</label>
+            
+            <input type="number" id="price" name="price" oninput="pval()" Required>
+            <p id="pp" style="color: #f7e6b5; font-size:75%"></p>
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button></center>
+            <br>
+        </form>
+    </div>
+
+
+    <script>
+        // Get references to the category and subcategory dropdowns
+        var categoryDropdown = document.getElementById('cat');
+        var subcategoryDropdown = document.getElementById('subcat');
+    
+        // Function to update subcategory options based on the selected category
+        function updateSubcategories() {
+            var selectedCategory = categoryDropdown.value;
+            subcategoryDropdown.innerHTML = '<option value="">Select subcategory</option>'; // Reset subcategory dropdown
+    
+            if (selectedCategory) {
+                // Fetch category-subcategory data from your view
+                fetch('/get_category_subcategory_data/')  // Replace with the actual URL
+                    .then(response => response.json())
+                    .then(data => {
+                        var subcategories = data[selectedCategory] || [];
+                        subcategories.forEach(function (subcategory) {
+                            var option = document.createElement('option');
+                            option.value = subcategory;
+                            option.textContent = subcategory;
+                            subcategoryDropdown.appendChild(option);
+                        });
+    
+                        // Enable or disable the subcategory dropdown based on the category selection
+                        subcategoryDropdown.disabled = subcategories.length === 0;
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+        }
+    
+        // Add an event listener to the category dropdown to update subcategories
+        categoryDropdown.addEventListener('change', updateSubcategories);
+    
+        // Initial update when the page loads
+        updateSubcategories();
+    </script>
+    
+
+    
+</body>
+
+
+</html>

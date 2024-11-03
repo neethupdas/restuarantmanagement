@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    {% for cart_item in cart_details %}
+        <tr>
+            <td width="20px">{{ cart_item.item.name }}</td>
+            <td width="20px">{{ cart_item.quantity }}</td>
+            <td width="20px">{{ cart_item.price }}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,463 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        textarea
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        function iname()
+        {
+            var name=document.getElementById('name').value;
+            var errorMessage=document.getElementById('ename');
+            var spaceRegex = /\s/;
+            if(name==null || name=="")
+            {
+                document.getElementById('ename').innerHTML="Username can't be null"
+                btn.disabled=true;
+
+            }
+            else if(spaceRegex.test(name)) {
+                document.getElementById('ename').innerHTML="Item name can't be null";
+                btn.disabled=true;
+                // Prevent form submission
+            }
+            else if(name.length<2)
+            {
+                document.getElementById('ename').innerHTML='Username must be at least 4 characters long';
+                btn.disabled=true;
+            }
+            else if((name.replace(/[^0-9]/g,"").length) > ((username.length)-1))
+            {
+                document.getElementById('ename').innerHTML='Username must contains at least 3 alphebets';
+                btn.disabled=true;
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        <div id="logout">
+            <h3>
+            {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            {% endif %}
+            </h3><br><br>
+        </div>
+        <form action="" name="additem" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <center><b><font size="+1" color="white" border=1px solid black>Add Item</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} m-2" id="msg" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <label for="catn">Selected category id {{item.cid}} you can Choose another category:</label>
+            
+            <select name="catn" id="catn" value="{{item.cid}}">
+                <option value="">--select--</option>
+                {% for cat in category %}
+                    <option value={{cat.cname}}>{{cat.cname}}</option>
+                {% endfor %} 
+            </select><br><br>
+            
+
+            <label for="name">Item name:</label>
+            <input type="text" name="name" id="name" value="{{item.name}}" required><br>
+            <p id="ename" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="description">description:</label>
+            <textarea name="description" id="description" rows="4" cols="50" required>{{ item.description }}</textarea><br>
+            <br>
+            <label for="existing-image">Existing Image:</label>
+            <img src="{{ item.image.url }}" alt="Existing Image" width="50px">
+            <br>
+            <label for="image">Select a new Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" Required><br><br>
+            
+           
+
+            <label for="price">Price</label>
+            
+            <input type="number" id="price" name="price" value="{{item.price}}" Required><br><br>
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button></center>
+            <br>
+        </form>
+    </div>
+</body>
+</html> {% endcomment %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        textarea
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 5px;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        <div id="logout">
+            <h3>
+            {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            {% endif %}
+            </h3><br><br>
+        </div>
+        <form action="" name="additem" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <center><b><font size="+1" color="white" border=1px solid black>Edit Item</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                        {% for message in messages %}
+                            <div class="messages" id="msg" >
+                                <center><font style="color:white;">{{message}}</font></center>
+                            </div>
+                            <script>
+                                // Add JavaScript to hide the message after 5 seconds
+                                setTimeout(function () {
+                                    var messagesContainer = document.querySelector('.messages');
+                                    if (messagesContainer) {
+                                        messagesContainer.style.display = 'none';
+                                    }
+                                }, 3000); // 5000 milliseconds = 5 seconds
+                            </script>
+                        {% endfor %}
+                        
+                    {% endif %}
+
+            <label for="cat">Choose category:</label>
+            
+            <select name="catn" id="catn">
+                <option value="">--select--</option>
+                {% for citem in category %}
+                    <option value={{citem.cname}}>{{citem.cname}}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="subcat">Choose subcategory:</label>
+<select name="subcatn" id="subcatn">
+    <option value="">--select--</option>
+</select><br><br>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('catn');
+        const subcategorySelect = document.getElementById('subcatn');
+    
+        categorySelect.addEventListener('change', function() {
+            const selectedCategory = categorySelect.value;
+    
+            if (selectedCategory) {
+                fetch(`/get_subcategories/?category=${selectedCategory}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        subcategorySelect.innerHTML = ''; // Clear the subcategory dropdown
+                        const subcategories = data.subcategories;
+                        for (const subcategory of subcategories) {
+                            const option = document.createElement('option');
+                            option.value = subcategory;
+                            option.textContent = subcategory;
+                            subcategorySelect.appendChild(option);
+                        }
+                    });
+            } else {
+                subcategorySelect.innerHTML = ''; // Clear the subcategory dropdown when no category is selected
+            }
+        });
+    });
+    </script>
+
+
+            <label for="name">Item name:</label>
+            <input type="text" name="name" id="name" value="{{item.name}}" Required><br>
+            <p id="ename" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="description">description:</label>
+            <input type="text" name="description" id="description" value="{{ item.description|safe }}" Required><br>
+            <br>
+            <label for="eimage">Select an Image:</label>
+            <input type="file" name="eimage" accept="image/*" ><br><br>
+            
+            <label for="price">Price</label>
+            
+            <input type="number" id="price" name="price" value="{{item.price}}" Required><br><br>
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button></center>
+            <br>
+        </form>
+    </div>
+
+
+        
+
+</body>
+
+
+</html>

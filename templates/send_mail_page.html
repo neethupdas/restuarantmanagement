@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+
+        <style>
+            body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: none;
+            border-bottom: 1px solid #F3B820; 
+            outline: none;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        
+        input[type=email]
+        {
+            border: none;
+            border-bottom: 1px solid #F3B820; 
+            outline: none;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        textarea
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            ::placeholder {
+                
+                font-size: 14px;
+                 /* Change this to the color you want */
+            }
+    </style>
+
+
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        {% include 'a_sidebar.html' %}
+        <div id="content">
+        <form action="{% url 'send_mail_page' reservation_id %}" name="sendmail" method='POST'>
+            {% csrf_token %}
+            
+            <center><b><font size="+1" color="white">&nbsp;&nbsp;&nbsp;&nbsp;Reason For Rejection</font></b><br></center><br><br>
+
+            <center><font size="+1" color="white">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="messages" id="msg" >
+                            {{message}}
+                        </div>
+                        <script>
+                            // Add JavaScript to hide the message after 5 seconds
+                            setTimeout(function () {
+                                var messagesContainer = document.querySelector('.messages');
+                                if (messagesContainer) {
+                                    messagesContainer.style.display = 'none';
+                                }
+                            }, 5000); // 5000 milliseconds = 5 seconds
+                        </script>
+                    {% endfor %}
+                    
+                {% endif %}
+               
+            </font></center>
+
+            
+
+            <br><br>
+
+            
+            <input type="text" name="title" id="title" placeholder="Enter Title">
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+            
+            <input type="email" name="email" id="email" value="{{reservation.email}}" readonly>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p><br>
+
+            
+            <textarea name="reason" id="reason" rows="4" placeholder="Reason" Required></textarea>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">send</font></button></center>
+
+        </form>
+
+
+    </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        {% comment %} table {
+            width: 100%;
+          }
+          
+          th {
+            height: 50px;
+          }
+          td {
+            height: 40px;
+            text-align:center;
+          } {% endcomment %}
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          th
+          {
+            background-color: #343230;
+            color:#F3B820;
+          }
+          tr:nth-child(even) {
+            background-color: #e0e0e0;
+    </style>
+    <script>
+        function showModal(orderId) {
+            // Fetch details for the given order_id using AJAX
+            fetch(`/get_cart_details/${orderId}`)
+                .then(response => response.json())
+                .then(cartDetails => {
+                    // Update the modal content with the details received
+                    document.getElementById('modalContent').innerHTML = cartDetails.content;
+    
+                    // Display the modal
+                    $('#myModal').modal('show');
+                });
+        }
+    </script>
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <center><h1>ORDER HISTORY</h1></center>
+        <font size="+1" color="white">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages" id="msg" >
+                        {{message}}
+                    </div>
+                    <script>
+                        // Add JavaScript to hide the message after 5 seconds
+                        setTimeout(function () {
+                            var messagesContainer = document.querySelector('.messages');
+                            if (messagesContainer) {
+                                messagesContainer.style.display = 'none';
+                            }
+                        }, 5000); // 5000 milliseconds = 5 seconds
+                    </script>
+                {% endfor %}
+                
+            {% endif %}
+        </font>
+
+        <table align="center" height="550%" border=2px soid black>
+            <tr>
+                
+                <th>Username</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Payment Id</ht>
+                <th>View Details</th>
+                
+                {% comment %} <th></th> {% endcomment %}
+                <!--<th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>-->
+            </tr>
+            {% for order in orders %}
+            <tr>
+                    <td>{{order.customer_id.username}}</td>
+                    <td>{{order.date}}</td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.razorpay_order_id}}</td>
+                    <td onclick="showModal('{{ order.id }}')"><a href="#" >View Details</a></td>
+            </tr>   
+            
+            {% endfor %}
+
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Order Details</h4>
+                        </div>
+                        <div class="modal-body" id="modalContent">
+                            <!-- Details will be dynamically inserted here -->
+                        </div>
+                        {% comment %} <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+
+        </table>    
+        
+        
+
+
+    </div>
+
+    
+
+</body>
+</html>

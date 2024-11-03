@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        {% comment %} table {
+            width: 100%;
+          }
+          
+          th {
+            height: 50px;
+          }
+          td {
+            height: 40px;
+            text-align:center;
+          } {% endcomment %}
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          th
+          {
+            background-color: #343230;
+            color:#F3B820;
+          }
+          tr:nth-child(even) {
+            background-color: #e0e0e0;
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        
+        <font size="+1" color="white">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages" id="msg" >
+                        {{message}}
+                    </div>
+                    <script>
+                        // Add JavaScript to hide the message after 5 seconds
+                        setTimeout(function () {
+                            var messagesContainer = document.querySelector('.messages');
+                            if (messagesContainer) {
+                                messagesContainer.style.display = 'none';
+                            }
+                        }, 5000); // 5000 milliseconds = 5 seconds
+                    </script>
+                {% endfor %}
+                
+            {% endif %}
+        </font>
+        <!--Form for choose a date-->
+        <center>
+            <form action="{% url 'a_view_specific_date_reservations' %}" name="datesearch" method='POST'>
+                {% csrf_token %}
+                <label for="date">Choose a date</label>
+                <input type="date" id="date" name="date" min="" max="" Required>
+                <button type="submit" name="btn" id="btn"><font style="color:black;">Find</font></button>
+                <br>
+            </form>
+        </center>   
+
+
+
+
+    {% if not reservations%}
+        <br><br><br><br><br><br><br><br><br><br><br><h1><center>NO RESERVATIONS !</center></h1>
+    {% endif %}
+    {% if reservations %}
+    <br><br>
+        <table align="center" height="550%" border=2px soid black>
+            <tr>
+            
+                <th>Customername</th>
+                <th>Email id</th>
+                <th width="10%">Phone number</th>
+                <th>Date</th>
+                <th>Timein</th>
+                <th>Timeout</th>
+                <th width="8%">Number of Persons</th>
+                <th>Status</th>
+            {% comment %} <th></th> {% endcomment %}
+            <!--<th>Status</th>
+            <th>Edit</th>
+            <th>Delete</th>-->
+            </tr>
+            {% for x in reservations %}
+
+                
+                    <tr>
+                        <td>{{x.customer_id.username}}</td>
+                        <td>{{x.email}}</td>
+                        <td>{{x.phone}}</td>
+                        <td>{{x.date}}</td>
+                        <td>{{x.timein}}</td>
+                        <td>{{x.timeout}}</td>
+                        <td>{{x.numberofpersons}}</td>
+                        <td>
+                            {% if x.reject == True %}
+                                REJECTED
+                            {% elif x.cancel == True %}
+                                CANCELED
+                            {% else %}
+                                ACTIVE
+                            {% endif%}
+                        </td>
+                    </tr>    
+                
+            {% endfor %}
+        </table>
+        <br></br>
+        <b>Total Number of reservations = {{no_of_reservations}}</b>
+    {% endif %} 
+     
+    </div>
+</body>
+</html>

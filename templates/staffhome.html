@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #logout {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+    </style>
+</head>
+<body>
+    {% include 's_header.html' %} 
+    {% include 's_sidebar.html' %} 
+    
+    
+      <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+    
+
+    <!-- Content area -->
+    
+        <h1>Staff</h1>
+</body>
+</html>

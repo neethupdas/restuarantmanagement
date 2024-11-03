@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <style>
+            body
+            {
+                
+                {% comment %} background-image:url("{% static 'myimages/chomebg.jpg'%}"); {% endcomment %}
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+            }
+            form
+			{
+				border:1px solid #F3B820;
+				width:50%;
+                height:20%;
+				background-color:#343230;
+                padding:3% 5%; 
+                margin: auto;
+			}
+            .div1
+            {
+                
+                padding:1% 20%;
+            }
+            input[type=text]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=email]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=password]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=number]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=date]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:25%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=time]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            textarea
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            label
+            {
+                font-size:100%;
+                color:#F3B820;
+                text-align:left;
+            }
+            button
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:35%;
+                color:black;
+            }
+            .logout {
+                margin-left: 150px;
+                padding: 0px;
+                width:20px;
+                display: flex;
+                align-items: center;
+            }
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+            td
+            {
+                width: 220px;
+            }
+
+
+
+            .font-color-white {
+                color: white; /* Change 'red' to your desired color */
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div class="test_for_customerprofile"></div>
+        {% include 'c_header.html' %}
+
+        {% if not previous_details%}
+        <br><br><br><br><br><br><br><br><br><br><br><h1><center>NO PREVIOUS RESERVATIONS</center></h1>
+    
+        {% else %}
+
+
+        
+            
+        <br><br><br><br><br><br>
+                
+
+                {% for details in previous_details %} 
+                <center>
+
+                    <form action="{% url 'c_cancel_reservation' details.pk %}" name="datesearch" method='POST' onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+                        {% csrf_token %}
+                        <table class="font-color-white">
+                            <tr>
+                                <td >Date </td>
+                                <td>:{{details.date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Time In </td>
+                                <td>:{{details.timein}}</td>
+                            </tr>
+                            <tr>
+                                <td>Time Out </td>
+                                <td>:{{details.timeout}}</td>
+                            </tr>
+                            <tr>
+                                <td>Number Gusts </td>
+                                <td>:{{details.numberofpersons}}</td>
+                            </tr>
+                            <tr>
+                                <td>Table Number </td>
+                                <td>:
+                                {% for res_table_no in res_table_nos %}
+                                    {% if res_table_no.reservation_id == details %}
+                                        {{res_table_no.table_id.t_no}} &nbsp;&nbsp;
+                                    {% endif %}
+                                {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                        {% if details.reject == True%}
+                            <td><font size="+1" color="red">Your Reservation is rejected due to : <br> {{details.reason}}</font></td>
+                        {% else %}
+
+                            {% if  details.cancel == True %}
+                                <font size="+1" color="white">Your Reservation is canceled<br></font>
+                            {% else %}
+                                {% if details.date > current_date %}
+                                    <button type="submit" name="btn" id="btn"><font style="color:black;">Cancel</font></button>
+                                {% elif details.date == current_date and details.timein > current_time %}
+                                    <button type="submit" name="btn" id="btn"><font style="color:black;">Cancel</font></button>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+
+
+                        
+                        
+                        <br>
+                    </form>
+
+                
+                    
+            
+        
+        </center>
+            <br><br><br>
+                {% endfor %}
+
+                
+            
+        {% endif %}
+
+        
+
+
+        <script src="" async defer></script>
+    </body>
+</html>

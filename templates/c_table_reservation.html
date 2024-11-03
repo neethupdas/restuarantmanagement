@@ -1,0 +1,459 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <style>
+            body
+            {
+                
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+            }
+            form
+			{
+				border:1px solid #F3B820;
+				width:50%;
+                height:20%;
+				background-color:#343230;
+                padding:3% 5%; 
+                margin: auto;
+			}
+            .div1
+            {
+                
+                padding:1% 20%;
+            }
+            input[type=text]
+            {
+                border: none;
+                border-bottom: 1px solid #F3B820; 
+                outline: none;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=email]
+            {
+                border: none;
+                border-bottom: 1px solid #F3B820; 
+                outline: none;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=password]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=number]
+            {
+                border: none;
+                border-bottom: 1px solid #F3B820; 
+                outline: none;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=date]
+            {
+                border: none;
+                border-bottom: 1px solid #F3B820; 
+                outline: none;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:25%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=time]
+            {
+                border: none;
+                border-bottom: 1px solid #F3B820; 
+                outline: none;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            textarea
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            label
+            {
+                font-size:100%;
+                color:#F3B820;
+                text-align:left;
+            }
+            button
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:35%;
+                color:black;
+            }
+            .logout {
+                margin-left: 150px;
+                padding: 0px;
+                width:20px;
+                display: flex;
+                align-items: center;
+            }
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+        </style>
+        <script>
+            var x=0
+            var userbtn=0
+            var mailbtn=0
+            var phonebtn=0
+            var timebtn=0
+            var numberofpersonsbtn=0
+            var timeoutbtn=0
+            function usernameval()
+            {
+                //alert("enter user");
+                var username=document.getElementById('username').value;
+                var errorMessage=document.getElementById('up');
+
+                var m=document.getElementById('email');
+                var phone=document.getElementById('phone');
+                var address=document.getElementById('address');
+                
+
+                const btn=document.getElementById('btn');
+                if(username==null || username=="")
+                {
+                    document.getElementById('up').innerHTML="Name can't be null"
+                    btn.disabled=true;
+                    userbtn=1
+                }
+                else if(username.length<4)
+                {
+                    document.getElementById('up').innerHTML='Name must be at least 4 characters long';
+                    btn.disabled=true;
+                    userbtn=1
+                }
+                else if((username.replace(/[^0-9]/g,"").length) > ((username.length)-3))
+                {
+                    document.getElementById('up').innerHTML='Name must contains at least 3 alphebets';
+                    btn.disabled=true;
+                    userbtn=1
+                }
+                else if(username.length>3 && username.length<16)
+                {
+                    document.getElementById('up').innerHTML="";
+                    userbtn=0
+                }
+                else if(username.length >15)
+                {
+                    document.getElementById('up').innerHTML = 'Name must be less than 15 characters'; // Clear the error message
+                    userbtn=1
+                }
+            }
+            function mailval()
+            {
+                var m=document.getElementById('email').value;
+                var errorMessage = document.getElementById('ep');
+
+                var phone=document.getElementById('phone');
+                var address=document.getElementById('address');
+                
+
+                const btn=document.getElementById("btn");
+                var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+                //alert(m);
+                if(m==null || m=="")
+                {
+                    document.getElementById('ep').innerHTML="Enter the email id";
+                    btn.disabled=true;
+                    mailbtn=1
+                }
+                else if(! regex.test(m)) 
+                {
+                    document.getElementById('ep').innerHTML="Enter a valid email id ";
+                    btn.disabled=true;
+                    mailbtn=1
+                }
+                else
+                {
+                    document.getElementById('ep').innerHTML="";
+                    mailbtn=0
+                }
+
+            }
+            function phoneval()
+            {
+                var phone=document.getElementById('phone').value;
+                var errorMessage=document.getElementById('pp');
+
+                
+                
+                //alert("Enter");
+                const btn=document.getElementById('btn');
+                const reg=/^[6-9]\d{9}$/
+                if(! reg.test(phone))
+                {
+                    document.getElementById('pp').innerHTML="Invalid Phone number";
+                    btn.disabled=true;
+                    
+                    phonebtn=1
+                }
+                else if(phone.length != 10)
+                {
+                    document.getElementById('pp').innerHTML="Phone number should contains 10 digits";
+                    btn.disabled=true;
+                    
+                    phonebtn=1
+                }
+                else
+                {
+                    document.getElementById('pp').innerHTML="";
+                    phonebtn=0
+                }
+            }
+            function timeval()
+            {
+                var time=document.getElementById('time').value;
+                var timeout=document.getElementById('timeout').value;
+                var timep=document.getElementById('timep');
+                var date=document.getElementById('date').value;
+                const btn=document.getElementById('btn');
+                var minTime="09:00";
+                var maxTime = "23:00";
+                var now = new Date();
+                now.setHours(now.getHours() + 3); 
+                var currentHour = now.getHours();
+                var currentMinute = now.getMinutes();
+                var minHour = currentHour; 
+                var today = new Date();
+                var thisdate = new Date(today);
+                var todaydate = today.toISOString().split('T')[0];
+                var todayminTime = (minHour < 10 ? '0' : '') + minHour + ':' + ('0' + currentMinute).slice(-2);
+                if(date==todaydate & time < todayminTime)
+                {
+                    document.getElementById('timep').innerHTML="Choose the time after "+todayminTime;
+                    btn.disabled=true;
+                    timebtn=1
+                }
+                else if (time < minTime || time > maxTime) 
+                {
+                    document.getElementById('timep').innerHTML="Please select a time between 9 AM and 11 PM."
+                    btn.disabled=true;
+                    timebtn=1
+                }
+                else if(time < timeout)
+                {
+                    document.getElementById('timep').innerHTML="Please select a valid timein and timeout."
+                    btn.disabled=true;
+                    timebtn=1
+                }
+                else
+                {
+                    document.getElementById('timep').innerHTML="";
+                    timebtn=0
+                }
+            }
+            function timeoutval()
+            {
+                var timein = document.getElementById("time").value;
+                var timeout = document.getElementById("timeout").value;
+
+                var timeinParts = timein.split(":");
+                var timeoutParts = timeout.split(":");
+
+                var timeinHour = parseInt(timeinParts[0]);
+                var timeinMinute = parseInt(timeinParts[1]);
+                var timeoutHour = parseInt(timeoutParts[0]);
+                var timeoutMinute = parseInt(timeoutParts[1]);
+
+                var timeinTotalMinutes = timeinHour * 60 + timeinMinute;
+                var timeoutTotalMinutes = timeoutHour * 60 + timeoutMinute;
+
+                var minTimeoutTotalMinutes = timeinTotalMinutes + 15;
+                var maxTimeoutTotalMinutes = timeinTotalMinutes + 180;
+
+                if (timeoutTotalMinutes < minTimeoutTotalMinutes || timeoutTotalMinutes > maxTimeoutTotalMinutes) 
+                {
+                    document.getElementById("timep").innerText = "Timeout must be at least 15 minutes after Timein and no more than 3 hours after Timein.";
+                    timeoutbtn=1;
+                } 
+                else 
+                {
+                    document.getElementById("timep").innerText = "";
+                    timeoutbtn=0;
+                }
+            }
+        function numberofpersonsval()
+        {
+            var n=document.getElementById('numberofpersons').value;
+            var np=document.getElementById('np');
+
+            const btn=document.getElementById('btn')
+                
+            if (n < 1 || n > 40) {
+                document.getElementById('np').innerHTML="Number of persons must between 1 and 40"
+                btn.disabled=true;
+                numberofpersonsbtn=1
+                //this.value = ""; // Reset the value if it's outside the range
+                }
+            else
+            {
+                document.getElementById('np').innerHTML="";
+                numberofpersonsbtn=0
+            }
+        }
+        function val()
+        {
+            const btn=document.getElementById('btn')
+            
+            if(userbtn==0 && mailbtn ==0 && phonebtn == 0 && timebtn ==0 && numberofpersonsbtn == 0 && timeoutbtn==0)
+            {
+                btn.disabled=false;
+            }
+            else
+            {
+                btn.disabled=true
+            }
+        }
+        </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div class="test_for_customerprofile"></div>
+        {% include 'c_header.html' %}
+        <div></div>
+            <div class="div1">
+                
+                <form action="{% url 'c_table_reservation' %}" name="table_reservation" method='POST'>
+                    {% csrf_token %}
+                    
+                    <center><b><font size="+1" color="white">&nbsp;&nbsp;&nbsp;&nbsp;Reserve Your Table</font></b><br></center><br><br>
+
+                    <center><font size="+1" color="white">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="messages" id="msg" >
+                                    {{message}}
+                                </div>
+                                <script>
+                                    // Add JavaScript to hide the message after 5 seconds
+                                    setTimeout(function () {
+                                        var messagesContainer = document.querySelector('.messages');
+                                        if (messagesContainer) {
+                                            messagesContainer.style.display = 'none';
+                                        }
+                                    }, 20000); // 5000 milliseconds = 5 seconds
+                                </script>
+                            {% endfor %}
+                            
+                        {% endif %}
+                       
+                    </font></center>
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{% url 'c_view_previous_reservations' %}" style="color: white; text-decoration: none;">Previous Reservation Details</a>
+
+                    <br><br>
+
+                    <label for="username">Name:</label>
+                    <input type="text" name="username" id="username" oninput="usernameval() ; val()"  value="{{user_details.name}}" readonly>
+                    <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+                    <label for="email">Email id:</label>
+                    <input type="email" name="email" id="email" oninput="mailval() ; val()" value="{{user_details.email}}" Required>
+                    <p id="ep" style="color: #f7e6b5; font-size:75%"></p>
+
+                    <label for="phone">Phone:</label>
+                    <input type="text" name="phone" id="phone" oninput="phoneval() ; val()" value="{{user_details.phone}}" Required>
+                    <p id="pp" style="color: #f7e6b5; font-size:75%"></p>
+        
+                    
+
+                    <label for="date">Select a Date:</label>
+                    <input type="date" id="date" name="date" min="" max="" oninput="timeval() ; val()" Required><br><br>
+                    <label for="time">Timein (24-hour format)::&nbsp;</label>
+                    <input type="time" id="time" name="time" min="09:00" max="23:00" oninput="timeval() ; val() ; timeoutval()" Required><br><br>
+                    
+
+                    <label for="timeout">Timeout(24-hour format)::&nbsp;</label>
+                    <input type="time" id="timeout" name="timeout" min="09:15" max="23:00" oninput="timeoutval() ; val()" Required><br>
+                    <p id="timep" style="color: #f7e6b5; font-size:75%"></p>
+
+                    <label for="numberofpersons">Number of Guests:</label>
+                    <input type="number" id="numberofpersons" name="numberofpersons" oninput="numberofpersonsval() ; val()" Required><br>
+                    <p id="np" style="color: #f7e6b5; font-size:75%"></p><br>
+
+                    
+                    <!--<p>CSRF Token: {{ csrf_token }}</p>-->
+                    
+        
+                    <center><button type="submit" name="btn" id="btn"><font style="color:black;">Reserve</font></button></center>
+                    <br>
+                    
+                </form>
+
+                <script>
+
+                    
+
+
+                    // Get today's date
+                    var today = new Date();
+                    // Set the minimum date as today
+                    document.getElementById("date").min = today.toISOString().split('T')[0];
+                    // Calculate the maximum date as one week from today
+                    var maxDate = new Date(today);
+                    maxDate.setDate(maxDate.getDate() + 7);
+                    // Set the maximum date in the format expected by the input
+                    document.getElementById("date").max = maxDate.toISOString().split('T')[0];
+                </script>
+            </div>
+        <script src="" async defer></script>
+    </body>
+</html>

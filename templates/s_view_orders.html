@@ -1,0 +1,124 @@
+
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            .fixed-size-image {
+                width: 150px; /* Set your desired width */
+                height: 125px; /* Set your desired height */
+            }
+            button
+            {
+                width:150px;
+                height:40px;
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+
+
+        {% include 's_header.html' %}
+        {% if not orders %}
+        <br><br><br><br><br><br><br><br><br><br><br><h1><center>NO ORDERS !</center></h1>
+        {% endif %}
+        {% if orders %}
+        <br><br><br><br><br><br><br><br><br><br><br>
+        {% for order in orders %}
+        <center><font size="4px" style="color:red;">ORDER ID : #adXsa{{order.pk}}</font></center>
+            <center><table>
+                {% for ordered_item in carts %}
+                {% if ordered_item.order_id == order %}
+                    <tr>
+                        <td>    
+                            <img src="{{ordered_item.item.image.url}}" class="fixed-size-image" >
+                        </td>
+                        <td width="200px">
+                            Name of item : {{ordered_item.item.name}}<br><br>
+                            Quantity : {{ordered_item.quantity}}
+                        </td>
+                        <td width="300px" align="center">
+                            {% if ordered_item.delivered == False %}
+                                {% if ordered_item.prepared is False %}
+                                
+                                    <form action="{% url 'ordered_to_prepared' ordered_item.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" id="btn" name="btn" style="background-color:Red;">Start Prepairing</button>
+                                    </form>
+                                {% elif ordered_item.ready_to_deliver == False %}
+                                    <form action="{% url 'prepared_to_ready_to_deliver' ordered_item.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        prepairing...
+                                        <button type="submit" id="btn" name="btn" style="background-color:yellow;">Finish Prepaire</button>
+                                    </form>
+                                {% elif ordered_item.ready_to_deliver == True%}
+                                    <font style="color:green;"><b>Ready to deliver</b></font>
+                                {% endif %}
+                            {% endif %}
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                        <b>Customization : </b><br><br>
+                        {% for selected_customization in selected_customizations %}
+                            {% if selected_customization.cart_id == ordered_item %}
+                                <b>{{selected_customization.customization_id.name}}</b> - {{selected_customization.option_id.name}}<br><br>
+                            {%endif%}
+                        {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+            {% if order.ready_to_deliver == True %}
+                <form action="{% url 'deliver_order' order.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="btn" name="btn" style="background-color:green;">Deliver</button>
+                </form>
+            {% else %}
+                
+                    <button type="submit" id="btn" name="btn" class="btn">Deliver</button>
+                
+            {% endif %}
+        
+        </center>
+        {% endfor %} 
+        {% endif %}
+        <script src="" async defer></script>
+    </body>
+</html>
+
+
+
+
+
+
+{% comment %} {% comment %} {% include 's_header.html' %} 
+
+        <h1>Staff Order View</h1>
+
+{% for order in orders %}
+    Order<br>
+    {% for cart in carts %}
+        {% if cart.order_id == order %}
+            {{cart.item.name}}&nbsp;{{cart.quantity}}
+        {% endif %}<br><br>
+    {% endfor %}
+
+{% endfor %}{% comment %}  {% endcomment %}

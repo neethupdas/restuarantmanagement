@@ -1,0 +1,447 @@
+
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 50px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            .fixed-size-image {
+                width: 150px; /* Set your desired width */
+                height: 100px; /* Set your desired height */
+            }
+            .add
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:15%;
+                color:black;
+            }
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+{% comment %} <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+
+
+        {% include 'c_header.html' %} 
+
+        {% if not items%}
+            <br><br><br><br><br><br><br><br><br><br><br><h1><center>YOUR CART IS EMPTY !</center></h1>
+        {% endif %}
+        {% if items %}
+
+ <table align="center">
+    <br><br><br><br><br><br><center><font size="+2" align="right">Selected Items:  </font></center><br><br>
+    {% for cartitem in items %}
+        
+        <tr>
+            <td>    
+                <img src="{{cartitem.item.image.url}}" class="fixed-size-image">
+            </td>
+            <td width="350px">
+                <h5>{{cartitem.item.name}}<br></h5>
+            </td>
+                                
+            <td>
+                <b>{{cartitem.price}}</b>
+            </td>
+            <td>
+
+                <form method="post" action="{% url 'c_update_cart' cartitem.id %}">
+                    {% csrf_token %}
+                    <button type="submit" name="action" value="decrease">-</button>
+                    <input type="integer" name="quantity" value="{{ cartitem.quantity }}" min="1" style="width: 20px; text-align:center" disabled>
+                    <button type="submit" name="action" value="increase">+</button>
+                </form>
+                
+            </td>
+
+            <td>
+                <form method="post" action="{% url 'c_delefe_from_cart' cartitem.id %}">
+                    {% csrf_token %}
+                    <button type="submit" name="dlt" value="dlt">Delete</button>
+                    
+                </form>
+
+            </td>
+            
+        </tr>
+
+
+
+        
+
+
+
+        <tr>
+            <td></td>
+            <td>
+                {% if customizations%}
+                    {% for customization in customizations%}
+                        {% if customization.menu_item_id == cartitem.item %}
+                        
+                            {{customization.description}}<br><br>
+                            {% if customization.type == 0%}
+                                <!--Checkbox-->
+                                <table> 
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    {% for option in options%}
+                                        {% if option.customization == customization%}
+                                            <tr>
+                                                <center>
+                                                <td>
+                                                    <input type="checkbox" name="option" value="{{ option.name }}">
+                                                    {{ option.name }}
+                                                </td>
+                                                <td align="left">
+                                                    - {{ option.price }}
+                                                </td>
+                                                <center>
+                                            </tr>
+                                        {%endif%}
+                                    {% endfor%}
+                                </table>
+                            {% endif %}
+                            {% if customization.type == 1 %}
+                                <!--Radio-->
+                                <table> 
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    {% for option in options%}
+                                        {% if option.customization == customization%}
+                                            <tr>
+                                                <center>
+                                                <td>
+                                                    <input type="radio" name="option" value="{{ option.name }}">
+                                                    {{ option.name }}
+                                                </td>
+                                                <td align="left">
+                                                    - {{ option.price }}
+                                                </td>
+                                                <center>
+                                            </tr>
+                                        {%endif%}
+                                    {% endfor%}
+                                </table>
+                            {% endif %}
+                        {% endif %}
+                    {%endfor%}
+                {%endif%}
+        </td>
+
+
+        </tr>
+
+
+
+
+
+    {% endfor %}<tr><td></td><td align="right"><font size="+2" align="right">Total Amount : </font></td><td><font size="+2">{{p}}</font></td></tr></center>
+</table>
+<form method="post" action="{% url 'add_to_order'%}">
+    {% csrf_token %}
+    <br><center><button type="submit" name="add" value="add" class="add">Order</button> </center>   
+</form>
+{% endif %}
+    </body>
+
+     {% endcomment %}
+
+
+     <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+    
+        {% include 'c_header.html' %} 
+    
+        {% if not items %}
+            <br><br><br><br><br><br><br><br><br><br><br><h1><center>YOUR CART IS EMPTY !</center></h1>
+        {% endif %}
+        {% if items %}
+    
+        <table align="center">
+            <br><br><br><br><br><br><center><font size="+2" align="right">Selected Items:  </font></center><br><br>
+            {% for cartitem in items %}
+            
+            <tr>
+                <td>    
+                    <img src="{{cartitem.item.image.url}}" class="fixed-size-image">
+                </td>
+                <td width="350px">
+                    <h5>{{cartitem.item.name}}<br></h5>
+                </td>
+                                    
+                <td>
+                    {% comment %} <b>{{cartitem.price}}</b> {% endcomment %}
+                </td>
+                <td>
+    
+                    <form method="post" action="{% url 'c_update_cart' cartitem.id %}">
+                        {% csrf_token %}
+                        <button type="submit" name="action" value="decrease">-</button>
+                        <input type="integer" name="quantity" value="{{ cartitem.quantity }}" min="1" style="border: none; width: 20px; text-align:center" disabled>
+                        <button type="submit" name="action" value="increase">+</button>
+                    </form>
+                    
+                </td>
+    
+                <td>
+                    <form method="post" action="{% url 'c_delefe_from_cart' cartitem.id %}">
+                        {% csrf_token %}
+                        <button type="submit" name="dlt" value="dlt">Delete</button>
+                    </form>
+                </td>
+                
+            </tr>
+    
+            <tr>
+                <td></td>
+                <td>
+                    {% if customizations %}
+                    {% for customization in customizations %}
+    {% if customization.menu_item_id == cartitem.item %}
+        {{ customization.description }}<br><br>
+        {% if customization.type == 0 %}
+            <!-- Checkbox -->
+            <table> 
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                
+                {% for option in options %}
+                    {% if option.customization == customization %}
+                        <form method="post" action="{% url 'c_apply_customization' cartitem.pk customization.pk option.pk %}">
+                            {% csrf_token %}
+                            <tr>
+                                <center>
+                                    <td>
+                                        <input type="checkbox" name="option" value="{{ option.name }}" data-price="{{ option.price }}" onchange="updatePrice(this)"
+                                        {% if option.pk in selected_option_ids %} checked {% endif %}>
+                                        {{ option.name }}
+                                    </td>
+                                    <td align="left">
+                                        - {{ option.price }}
+                                    </td>
+                                </center>
+                            </tr>
+                        
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td>
+                        <button type="submit" name="apply_customization">Apply</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        {% endif %}
+        {% if customization.type == 1%}
+            <!-- Radio -->
+
+
+
+            <table> 
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                
+                {% for option in options %}
+                    {% if option.customization == customization %}
+                        <form method="post" action="#">
+                            {% csrf_token %}
+                            <tr>
+                                <center>
+                                    <td>
+                                        <input type="radio" name="option" value="{{ option.name }}" data-price="{{ option.price }}" onchange="updatePrice(this)"
+                                        {% if option.pk in selected_option_ids %} checked {% endif %}>
+                                        {{ option.name }}
+                                    </td>
+                                    <td align="left">
+                                        - {{ option.price }}
+                                    </td>
+                                </center>
+                            </tr>
+                        
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td>
+                        <button type="submit" name="apply_customization">Apply</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+
+
+
+
+
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
+
+                    {%endif%}
+                </td>
+            </tr>
+            {% endfor %}
+            <form method="post" action="{% url 'add_to_order' %}">
+            <tr>
+                <td></td>
+                <td align="right"><font size="+2" align="right">Total Amount : </font>
+                
+                
+                
+                </td>
+                <td>
+                    <input type="number" id="total-price-input" name="total-price" value="{{ p }}" style="border: none; font-size: 18px; width: 100px;" readonly>
+                </td>
+            </tr>
+        </table>
+    
+        
+            {% csrf_token %}
+            <br><center><button type="submit" name="add" value="add" class="add">Order</button> </center>   
+        </form>
+        {% endif %}
+    
+        <script>
+            function updatePrice(option) {
+                var price = parseFloat(option.dataset.price);
+                var total = parseFloat(document.getElementById('total-price-input').value);
+                if (option.checked) {
+                    total += price;
+                } else {
+                    total -= price;
+                }
+                total = total.toFixed(2);
+                document.getElementById('total-price-input').value = total;
+            }
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,224 @@
+
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 50px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            .fixed-size-image {
+                width: 150px; /* Set your desired width */
+                height: 125px; /* Set your desired height */
+            }
+
+
+            .custom-container {
+                /* Add your custom styles for the image containers here */
+                margin: 10px; /* Example: Add margin */
+                border: 1px solid #ccc; /* Example: Add border */
+                padding: 15px; /* Example: Add padding */
+            }
+
+
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+    
+            .container {
+                width: 80%;
+                margin: 20px auto;
+                overflow: hidden;
+            }
+    
+            .image-container {
+                width: 23%; /* Adjust the width as needed */
+                height: 275px;
+                float: left;
+                margin: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                background-color: #fff;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+            }
+    
+            .image-container img {
+                width: 150px; /* Set your desired width */
+                height: 150px;
+                border-radius: 50%; /* Make the image circular, adjust as needed */
+            }
+    
+            .image-container p {
+                margin: 10px 0;
+                color: #333;
+            }
+        </style>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <!-- Add this link to your HTML file -->
+        {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> {% endcomment %}
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        {% include 'c_header.html' %}
+
+
+        {% if not orders%}
+        <br><br><br><br><br><br><br><br><br><br><br><h1><center>NO PREVIOUS ORDERS !</center></h1>
+    {% endif %}
+    {% if orders %}
+
+
+{% for order in orders %}
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ORDER ON {{order.date}}</h5>
+    <div class="container">
+        
+    {% for item in carts %}
+    
+        {% if item.order_id == order %}
+        <div class="image-container">
+           
+                <img src="{{item.item.image.url}}" >
+                <p>
+                Name of item : {{item.item.name}}<br>
+                Quantity : {{item.quantity}}<br>
+                Unit price: {{item.item.price}}<br>
+                Total : {{item.price}}</p>
+    </div>
+        {% endif %}
+    {% endfor %}
+</div>
+<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Total Amount :  {{order.price}}</h5><br>
+{% endfor %}<tr><td></td><td align="right">
+
+
+
+
+
+{% comment %} <div class="container">
+        {% for ordered_item in ordered_items %}
+        <!-- Container 1 -->
+        <div class="image-container">
+            <img src="{{ordered_item.item.image.url}}" alt="Image 1">
+            <p>Name of item : {{ordered_item.item.name}}<br>
+            Quantity : {{ordered_item.quantity}}</p>
+        </div>
+        {% endfor %}
+    
+
+</div> <!-- End of container -->{% endcomment %}
+
+{% endif %} 
+
+
+        <script src="" async defer></script>
+    </body>
+</html>

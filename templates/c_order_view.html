@@ -1,0 +1,272 @@
+
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 50px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            .fixed-size-image {
+                width: 150px; /* Set your desired width */
+                height: 125px; /* Set your desired height */
+            }
+
+
+            .custom-container {
+                /* Add your custom styles for the image containers here */
+                margin: 10px; /* Example: Add margin */
+                border: 1px solid #ccc; /* Example: Add border */
+                padding: 15px; /* Example: Add padding */
+            }
+
+
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+    
+            .container {
+                width: 80%;
+                margin: 20px auto;
+                overflow: hidden;
+            }
+    
+            .image-container {
+                width: 23%; /* Adjust the width as needed */
+                float: left;
+                margin: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                background-color: #fff;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+            }
+    
+            .image-container img {
+                width: 50px; /* Set your desired width */
+                height: 150px;
+                border-radius: 50%; /* Make the image circular, adjust as needed */
+            }
+    
+            .image-container p {
+                margin: 10px 0;
+                color: #333;
+            }
+        </style>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <!-- Add this link to your HTML file -->
+        {% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> {% endcomment %}
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        {% include 'c_header.html' %}
+
+
+        {% if not ordered_items %}
+        <br><br><br><br><br><br>
+            <a href="{% url 'c_view_previous_orders' %}">PREVIOUS ORDERS&nbsp;</a>
+        <br><br><br><br><br><h1><center>NO CURRENT ORDERS !</center></h1>
+        {% endif %}
+        {% if ordered_items %}
+            <br><br><br><br><br><br>
+            <p style="text-align:right"><a href="{% url 'c_view_previous_orders' %}">PREVIOUS ORDERS
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a></p>
+            
+            <table align="center">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {% if orderid.ready_to_deliver == True %}
+                            <b><font size="5px" style="color:green;">YOUR ORDER IS READY</font><b>
+                        {% else %}
+                            {% if orderid.started_to_prepare == True %}
+                                <font size="5px" style="color:red;">YOUR ORDER UNDER PREPARATION</font>
+
+                            {% elif orderid.paid_status == False %}
+                                <font size="5px" style="color:red;">MAKE PAYMENT</font>
+                            {% else %}
+                                <font size="4px" style="color:Black;">ORDER PLACED SUCCESSFULLY</font>
+                            {% endif%}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% for ordered_item in ordered_items %}
+                    <tr>
+                        <td>    
+                            <img src="{{ordered_item.item.image.url}}" class="fixed-size-image" >
+                        </td>
+                        <td width="200px">
+                            Name of item : {{ordered_item.item.name}}<br><br>
+                            Quantity : {{ordered_item.quantity}}
+                        </td>
+                        <td>
+            
+                        </td>
+                    </tr>
+                {% endfor %}<tr><td></td><td align="right">
+                {% if order_id.paid_status == False %}
+                    <form action="{% url 'make_payment' order_id.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="btn" id="btn">Make Payment</button>
+                    </form> 
+                    <!-- c_order_view.html -->
+                {% endif %}
+
+
+                {% if order %}
+                    <form action="{% url 'payment_status' order.pk %}" method="POST">
+                        {% csrf_token %}
+                        <script
+                            src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="rzp_test_3lwUgvoFZrW6nK" 
+                            data-amount="{{order.price}}"
+                            data-currency="{{payment.currency}}"
+                            data-order_id="{{payment.id}}"
+                            data-buttontext="Pay with Razorpay"
+                            data-name="{{order.customer_id.username}}"
+                            data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
+                            data-image="https://example.com/your_logo.jpg"
+                            data-prefill.name="{{order.customer_id.username}}"
+                            data-prefill.email="{{order.customer_id.email}}"
+                            data-theme.color="#F37254"
+                        ></script>
+                        <input type="hidden" custom="Hidden Element" name="hidden"/>
+                    </form>
+                {% endif %}
+
+                {% if orderid.ready_to_deliver == True %}
+                    <font size="4px" style="color:red;">YOUR ORDER ID IS : #adXsa{{orderid.pk}}</font>
+                {% endif %}
+            </table>
+        {% endif %} 
+        <script src="" async defer></script>
+    </body>
+</html>
+
+{% comment %} <div class="container">
+        {% for ordered_item in ordered_items %}
+        <!-- Container 1 -->
+        <div class="image-container">
+            <img src="{{ordered_item.item.image.url}}" alt="Image 1">
+            <p>Name of item : {{ordered_item.item.name}}<br>
+            Quantity : {{ordered_item.quantity}}</p>
+        </div>
+        {% endfor %}
+    
+
+</div> <!-- End of container -->{% endcomment %}
+
+
+
+
+        

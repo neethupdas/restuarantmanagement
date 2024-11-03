@@ -1,0 +1,111 @@
+
+<style>
+    /* Reset some default styles for cleaner presentation */
+    body, h1, ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Style the sidebar */
+    #sidebar {
+        background-color: #333;
+        color: white;
+        width: 250px;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+    #sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+    }
+
+    #sidebar a:hover {
+        background-color: #555;
+    }
+
+    /* Style the content area */
+    #content {
+        margin-left: 250px;
+        padding: 20px;
+    }
+
+    /* Style the dropdown */
+        .dropdown {
+            float: right;
+            position: relative; /* Make the parent element relative */
+			margin-right:50px;
+            min-width: 200px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 300px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 1px 1px;
+            z-index: 1;
+            top: 100%; /* Position the dropdown content below the dropdown button */
+            right: -120px; /* Align the dropdown content to the right */
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            color: blue;
+        }
+		#sidebar ul {
+    list-style: none;
+   }
+
+
+
+
+
+
+    
+
+</style>
+<div id="sidebar">
+    <h1>Admin</h1>
+    <ul>
+            <li><a href="{% url 'adminhome' %}">Home</a></li>
+            <li>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+                {% endif %}
+            </li>
+            <li><a href="{% url 'a_view_person' %}">View Users</a></li>
+            {% comment %} <li><a href="{% url 'a_add_person' %}">Add Employee</a></li> {% endcomment %}
+            <li><a href="{% url 'a_view_category' %}">View category</a></li>
+            <li><a href="{% url 'a_add_category' %}" name="addcategory" id="addcategory">Add category</a></li>
+            <li><a href="{% url 'a_view_menu' %}">View Menu</a></li>
+            <li><a href="{% url 'a_add_items' %}">Add items</a></li>
+            <li><a href="{% url 'a_view_current_orders' %}">Current orders</a></li>
+            <li><a href="{% url 'a_view_order_history' %}">Order History</a></li>
+            <li class="dropdown"><a href="#">Reservation Details&nbsp; &#9660;</a>
+            
+                <div class="dropdown-content">
+                    <a href="{% url 'a_view_specific_date_reservations' %}">Reservation on a specific date</a>
+                    <a href="{% url 'a_view_rejected_reservations' %}">Rejected Reservations</a>
+                    <a href="{% url 'a_view_table_reservation' %}">All</a>
+                </div>
+            
+            </li>
+            <li><a href="{% url 'a_customization' %}">Cutomization</a></li>
+            
+        <!-- Add more links as needed -->
+    </ul>
+</div>

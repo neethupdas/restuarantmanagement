@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 5px;
+        }
+        textarea
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+    </style>
+    <script>
+        var cnamebtn=0
+        var descriptionbtn=0
+         
+        function cnameval()
+            {
+                //alert("enter user");
+                var name=document.getElementById('cname').value;
+                var errorMessage=document.getElementById('up');
+
+                var spaceRegex = /^\s*$/;
+
+                const btn=document.getElementById('btn');
+                if(name==null || name=="")
+                {
+                    document.getElementById('up').innerHTML="name can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(name)) {
+                    document.getElementById('up').innerHTML="name can't be null";
+                    btn.disabled=true;
+                }
+                else if(name.length<3)
+                {
+                    document.getElementById('up').innerHTML='name must be at least 3 characters long';
+                    btn.disabled=true;
+                }
+                else if((name.replace(/[^0-9]/g,"").length) > ((name.length)-2))
+                {
+                    document.getElementById('up').innerHTML='name must contains at least 2 alphebets';
+                    btn.disabled=true;
+                }
+                else if(name.length >25)
+                {
+                    document.getElementById('up').innerHTML = 'name must be less than 25 characters'; // Clear the error message
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('up').innerHTML="";
+                    btn.disabled=false;
+                }
+            }
+            function descriptionval()
+            {
+                var name=document.getElementById('description').value;
+                var errorMessage=document.getElementById('dp');
+                var spaceRegex = /^\s*$/;
+
+                const btn=document.getElementById('btn');
+                if(name==null || name=="")
+                {
+                    document.getElementById('dp').innerHTML="Description can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(name)) {
+                    document.getElementById('dp').innerHTML="Description can't be null";
+                    btn.disabled=true;
+                }
+                else if(name.length<10)
+                {
+                    document.getElementById('dp').innerHTML='Description must be at least 10 characters long';
+                    btn.disabled=true;
+                }
+                else if((name.replace(/[^0-9]/g,"").length) > ((name.length)-2))
+                {
+                    document.getElementById('dp').innerHTML='Description must contains at least 2 alphebets';
+                    btn.disabled=true;
+                }
+                else if(name.length >100)
+                {
+                    document.getElementById('dp').innerHTML = 'Description must be less than 25 characters'; // Clear the error message
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('dp').innerHTML="";
+                    btn.disabled=false;
+                }
+            }
+            function option_nameval()
+            {
+                var name=document.getElementById('option_name').value;
+                var errorMessage=document.getElementById('op');
+                var spaceRegex = /^\s*$/;
+
+                var name = document.getElementById('option_name').value;
+                var price = document.getElementById('option_price').value;
+
+                const btn=document.getElementById('btn');
+                if(name==null || name=="")
+                {
+                    document.getElementById('op').innerHTML="Name can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(name)) {
+                    document.getElementById('op').innerHTML="Name can't be null";
+                    btn.disabled=true;
+                }
+                else if(name.length<4)
+                {
+                    document.getElementById('op').innerHTML='Name must be at least 4 characters long';
+                    btn.disabled=true;
+                }
+                else if((name.replace(/[^0-9]/g,"").length) > ((name.length)-2))
+                {
+                    document.getElementById('op').innerHTML='Name must contains at least 2 alphebets';
+                    btn.disabled=true;
+                }
+                else if(name.length >100)
+                {
+                    document.getElementById('op').innerHTML = 'Name must be less than 100 characters'; // Clear the error message
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('op').innerHTML="";
+                    btn.disabled=false;
+                }
+                
+            }
+            function option_priceval()
+            {
+                var price=document.getElementById('option_price').value;
+                var errorMessage=document.getElementById('opp');
+                var spaceRegex = /^\s*$/;
+                const btn=document.getElementById('btn');
+                if(price==null || price=="")
+                {
+                    
+                    document.getElementById('opp').innerHTML="Price can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(price)) {
+                    
+                    document.getElementById('opp').innerHTML="Price can't be null";
+                    btn.disabled=true;
+                }
+                else if(price <0)
+                {
+                    
+                    document.getElementById('opp').innerHTML="Price must be greater than or equal to 0";
+                    btn.disabled=true;
+                }
+                else if(price >150)
+                {
+                    
+                    document.getElementById('opp').innerHTML="Price must be less than 150";
+                    btn.disabled=true;
+                }
+                else
+                {
+                    
+                    document.getElementById('opp').innerHTML="";
+                    btn.disabled=false;
+                }
+                
+            }
+            function optionval()
+            {
+                var errorMessage1=document.getElementById('op');
+                var errorMessage2=document.getElementById('opp');
+                const btn=document.getElementById('addbtn');
+                
+                if(errorMessage1.innerHTML == "" && errorMessage2.innerHTML == "" )
+                {
+                    btn.disabled=false;
+                }
+                else
+                {
+                    
+                    btn.disabled=true;
+                }
+            }
+            function btnval()
+            {
+                var errorMessage1=document.getElementById('op');
+                var errorMessage2=document.getElementById('opp');
+                var errorMessage3=document.getElementById('up');
+                var errorMessage4=document.getElementById('dp');
+                const btn=document.getElementById('btn');
+                
+                if(errorMessage1.innerHTML == "" && errorMessage2.innerHTML == "" && errorMessage3.innerHTML == "" && errorMessage4.innerHTML == "")
+                {
+                    btn.disabled=false;
+                }
+                else
+                {
+                    
+                    btn.disabled=true;
+                }
+            }
+    </script>
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    
+    <div id="content">
+        <form action="{% url 'a_add_customizations_onclick' menu_id %}" name="addcategory" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <center><b><font color="white" border=1px solid black>Add Customization</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages" id="msg" >
+                        <center><font style="color:white;">{{message}}</font></center>
+                    </div>
+                    <script>
+                        // Add JavaScript to hide the message after 5 seconds
+                        setTimeout(function () 
+                        {
+                            var messagesContainer = document.querySelector('.messages');
+                            if (messagesContainer) 
+                            {
+                                messagesContainer.style.display = 'none';                                  
+                            }
+                        }, 3000); // 5000 milliseconds = 5 seconds   
+                    </script>
+                {% endfor %}     
+            {% endif %}
+            
+            
+            <label for="name">Customization name:</label>
+            <input type="text" name="cname" id="cname" oninput="cnameval() ; btnval()" Required><br>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+            
+            
+            <label for="name">Description</label>
+            <textarea name="description" id="description" rows="4" oninput="descriptionval() ; btnval()" Required></textarea>
+            <p id="dp" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label>Type:</label><br>
+            <font style="color:#F3B820;">
+            <input type="radio" name="type" value="radio" Required> Can Choose single option
+            <input type="radio" name="type" value="checkbox"> Can choose multiple option<br><br>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+            </font>
+
+            <h2>Add Options</h2>
+            <div id="options">
+            <div class="option">
+                <label for="option_name">Option Name:</label><br>
+                <input type="text" id="option_name" name="option_name" oninput="option_nameval();btnval()" Required>
+                
+                <br><br>
+
+                <label for="option_price">Option Price:</label><br>
+                <input type="number" id="option_price" name="option_price" oninput="option_priceval(); btnval()" Required><br><br>
+            </div>
+            </div>
+            <p id="op" style="color: #f7e6b5; font-size:75%"></p>
+            <p id="opp" style="color: #f7e6b5; font-size:75%"></p>
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button></center>
+            <br>
+        </form>
+        
+    </div>
+</body>
+</html>

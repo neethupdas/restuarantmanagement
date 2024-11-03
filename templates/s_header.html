@@ -1,0 +1,79 @@
+
+<style>
+
+    header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: #333;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            h3,astyle
+            {
+                word-spacing: 30px;
+                color:white;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            .astyle
+            {
+                word-spacing: 30px;
+                color:white;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+                text-decoration: none;
+            }
+        </style>
+<header>
+    <h3>
+
+        {% if user.is_authenticated %}
+    
+        {% csrf_token %}
+        <a href="{% url 'logout_user' %}" class="astyle">    LOGOUT  </a>
+    
+        <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+        {% endif %}
+        <a href="{% url 's_profile' %}" class="astyle">PROFILE&nbsp;</a>
+        {% comment %} <a href="{% url 'staffhome' %}" class="astyle">CONTACT&nbsp;</a>  {% endcomment %}
+        <a href="{% url 's_view_orders' %}" class="astyle">ORDERS&nbsp;</a>  
+        {% comment %} <a href="{% url 'staffhome' %}" class="astyle">MENU&nbsp;</a> 
+        <a href="{% url 'staffhome' %}" class="astyle">SERVICE&nbsp;</a> 
+        <a href="{% url 'staffhome' %}" class="astyle">ABOUT&nbsp;</a>    {% endcomment %}
+        <a href="{% url 'staffhome' %}" class="astyle">HOME&nbsp;</a>   
+         
+             
+          
+         
+        
+        
+        
+        <!--<div class="dropdown">
+            <button class="dropbtn"><font size="+1" color="#F3B820">PROFILE  </font></button>
+            <div class="dropdown-content">
+                <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">Edit</a>
+                <a href="{% url 'changepassword' %}"><font size="+1" color="#F3B820">Change Password</font></a>
+            </div>
+        </div>-->
+
+
+
+    
+    {% comment %} {% if user.is_authenticated %}
+    
+        {% csrf_token %}
+        <a href="{% url 'logout_user' %}" >    LOGOUT  </a>
+    
+        <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+    {% endif %} {% endcomment %}
+    
+</h3>
+</header>

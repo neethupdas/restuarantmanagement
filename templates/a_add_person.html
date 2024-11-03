@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=email]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+/        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        textarea
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        
+        <form action="" name="addperson" method='POST'>
+            {% csrf_token %}
+            <center><b><font size="+1" color="white" border=1px solid black>Add Employee</font></b><br></center><br><br>
+
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} m-2" id="msg" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!--<input type="radio" id="customer" name="category" value=1 Required>
+            <label for="customer">Iam a customer</label>
+            <input type="radio" id="staff" name="category" value=2 Required>
+            <label for="staff">Iam not a customer</label><br><br>-->
+
+            <label for="username">Name:</label>
+            <input type="text" name="username" id="username" oninput="usernameval()" Required>
+            <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="email">Email id:</label>
+            <input type="email" name="email" id="email" oninput="mailval()" Required>
+            <p id="ep" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="phone">Phone:</label>
+            <input type="text" name="phone" id="phone" oninput="phoneval()" Required>
+            <p id="pp" style="color: #f7e6b5; font-size:75%"></p>
+
+            <label for="address">Address:</label>
+            <textarea name="address" id="address" rows="4" oninput="addressval()" Required></textarea
+            <p id="ap" style="color: #f7e6b5; font-size:75%"></p>
+
+            
+
+            
+            <!-- <label for="password">Password:</label>
+            <input type="password" name="password" id="password" oninput="passwordval()" Required>
+            <p id="passp" style="color: #f7e6b5; font-size:75%"></p> -->
+
+
+            <center><button type="submit" name="btn" id="btn"><font style="color:black;">Send verification mail</font></button></center>
+            <br>
+        </form>
+    </div>
+</body>
+</html>

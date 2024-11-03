@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <style>
+            body
+            {
+                
+                {% comment %} background-image:url("{% static 'myimages/chomebg.jpg'%}"); {% endcomment %}
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+            }
+            form
+			{
+				border:1px solid #F3B820;
+				width:40%;
+                height:70%;
+				background-color:#343230;
+                padding:3% 5%; 
+                margin: auto;
+			}
+            .div1
+            {
+                
+                padding:1% 20%;
+            }
+            input[type=text]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=email]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=password]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=number]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=date]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:25%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=time]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:20%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            textarea
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            label
+            {
+                font-size:100%;
+                color:#F3B820;
+                text-align:left;
+            }
+            button
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:35%;
+                color:black;
+            }
+            .logout {
+                margin-left: 150px;
+                padding: 0px;
+                width:20px;
+                display: flex;
+                align-items: center;
+            }
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+            td
+            {
+                width: 220px;
+            }
+
+
+
+            .font-color-white {
+                color: white; /* Change 'red' to your desired color */
+            }
+        </style>
+        <script>
+            function validateFile() {
+                var fileInput = document.getElementById('image');
+                var fileError = document.getElementById('fileError');
+            
+                // Check if a file is selected
+                if (fileInput.files.length === 0) {
+                    fileError.innerHTML = 'Please select an image file.';
+                    fileInput.setCustomValidity('Please select an image file.');
+                } else {
+                    // Get the file type
+                    var fileType = fileInput.files[0].type;
+            
+                    // Check if the file type is an image
+                    if (fileType.startsWith('image/')) {
+                        fileError.innerHTML = '';
+                        fileInput.setCustomValidity('');
+                    } else {
+                        fileError.innerHTML = 'Invalid file type. Please select an image file.';
+                        fileInput.setCustomValidity('Invalid file type. Please select an image file.');
+                    }
+                }
+            }
+        </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div class="test_for_customerprofile"></div>
+        {% include 'c_header.html' %}
+
+         
+        <br><br><br><br><br><br>
+            <center>
+                <form action="#" name="datesearch" method='POST'>
+                    {% csrf_token %}
+                    <br><br><br>
+                    <label for="image">Select an Image:</label>
+                    <input type="file" id="image" name="image" accept="image/*" onchange="validateFile()" Required><br>
+                    <p id="fileError" style="color: #f7e6b5; font-size: 75%;"></p><br><br><br>
+                    <button type="submit" name="btn" id="btn"><font style="color:black;">Save</font></button>
+                </form>
+            </center>
+            <br><br><br>
+        <script src="" async defer></script>
+    </body>
+</html>

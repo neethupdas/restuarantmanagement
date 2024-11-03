@@ -1,0 +1,51 @@
+
+<style>
+    /* Reset some default styles for cleaner presentation */
+    body, h1, ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Style the sidebar */
+    #sidebar {
+        background-color: #333;
+        color: white;
+        width: 250px;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+
+    #sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+    }
+
+    #sidebar a:hover {
+        background-color: #555;
+    }
+
+    /* Style the content area */
+    #content {
+        margin-left: 250px;
+        padding: 20px;
+    }
+</style>
+<div id="sidebar">
+    <h1></h1><br><br><br><br>
+    <ul>
+            
+            {% comment %} <li><a href="{% url 'staffhome' %}">View Users</a></li>
+            <li><a href="{% url 'staffhome' %}">Add Employee</a></li>
+            <li><a href="{% url 'staffhome' %}">View category</a></li>
+            <li><a href="{% url 'staffhome' %}">Add category</a></li>
+            <li><a href="{% url 'staffhome' %}">View Menu</a></li>
+            <li><a href="{% url 'staffhome' %}">Add items</a></li> {% endcomment %}
+            
+            
+        <!-- Add more links as needed -->
+    </ul>
+</div>

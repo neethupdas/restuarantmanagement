@@ -1,0 +1,772 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 70px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            .fixed-size-image {
+                width: 200px; /* Set your desired width */
+                height: 150px; /* Set your desired height */
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+                //alert("Enter")
+            }
+        </script>
+        <header>
+            <h3>HOME     ABOUT    SERVICE     MENU   CART  CONTACT  
+                <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">PROFILE</font></a>
+                
+                <!--<div class="dropdown">
+                    <button class="dropbtn"><font size="+1" color="#F3B820">PROFILE  </font></button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">Edit</a>
+                        <a href="{% url 'changepassword' %}"><font size="+1" color="#F3B820">Change Password</font></a>
+                    </div>
+                </div>-->
+
+
+
+            
+            {% if user.is_authenticated %}
+            
+                {% csrf_token %}
+                <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            
+                <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+            {% endif %}
+            
+        </h3>
+        </header>
+
+        
+        <div class="div1">
+            <div class="div11">
+                
+            </div>
+            
+            <br><br><br><br><br>
+            <h1>Enjoy Our <br>Delicious meal</h1>
+            <br><br><br><br><br><br><br><br><br><br><br>
+            
+        </div>
+        <div class="menu">
+
+
+            <center><h4>Salads Pizza Burger <h4></center>
+            <div id="salad">
+                <table align="center">
+                    {% for item in salads %}
+                    {% if item.status == 1 %}
+                        <tr>
+                            <td>    
+                                <img src="{{item.image.url}}" class="fixed-size-image">
+                            </td>
+                            <td>
+                                <h5>{{item.name}}<br></h5>
+                                {{item.description}}
+                            </td>
+                            <br>
+                            <br>
+                            <td>
+                                <b>{{item.price}}</b>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class ="piza" id="piza">
+                <table align="center">
+                    {% for item in pizza %}
+                    {% if item.status == 1 %}
+                        <tr>
+                            <td>    
+                                <img src="{{item.image.url}}" class="fixed-size-image">
+                            </td>
+                            <td>
+                                <h5>{{item.name}}<br></h5>
+                                {{item.description}}
+                            </td>
+                            <br>
+                            <br>
+                            <td>
+                                <b>{{item.price}}</b>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class ="brgr" id="brgr">
+                <table align="center" padding="1px">
+                    {% for item in burger %}
+                    {% if item.status == 1 %}
+                        <tr>
+                            <td>    
+                                <img src="{{item.image.url}}" class="fixed-size-image">
+                            </td>
+                            <td>
+                                <h5>{{item.name}}<br></h5>
+                                {{item.description}}
+                            </td>
+                            <br>
+                            <br>
+                            <td>
+                                <b>{{item.price}}</b>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+        <script src="" async defer></script>
+    </body>
+</html> {% endcomment %}
+
+
+
+
+
+
+{% comment %} {% load static %}
+<!DOCTYPE html> {% endcomment %}
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% comment %} <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 70px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            {% comment %} .fixed-size-image {
+                width: 200px; /* Set your desired width */
+                height: 150px; /* Set your desired height */
+            } {% endcomment %}
+        {% comment %} </style>
+        <style> {% endcomment %}
+            {% comment %} /* Style for the image card container */
+            .image-card-container {
+                display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            
+        
+            }
+    
+            /* Style for each image card */
+            .image-card {
+                {% comment %} flex: 0 0 calc(10% - 100px); /* 25% width with some margin */ {% endcomment %}
+                {% comment %} border: 1px solid #ccc;
+                margin: 10px;
+                padding: 10px;
+                align:center;
+                
+            }
+     {% endcomment %} {%comment%}
+            /* Style for the image within the card */
+            .image-card img {
+                width: 200px;
+                height: 200px;
+            }
+    
+            /* Style for the description within the card */
+            .image-card .description {
+                margin-top: 10px;
+                width : 400px;
+            }
+            .category-divider {
+                width: 100%;
+                height: 1px;
+                background-color: #ccc;
+                margin: 20px 0; /* Adjust the margin as needed */
+            }
+        </style>
+
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+                //alert("Enter")
+            }
+        </script>
+        <header>
+            <h3>HOME     ABOUT    SERVICE     MENU   CART  CONTACT  
+                <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">PROFILE</font></a>
+                
+                <!--<div class="dropdown">
+                    <button class="dropbtn"><font size="+1" color="#F3B820">PROFILE  </font></button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">Edit</a>
+                        <a href="{% url 'changepassword' %}"><font size="+1" color="#F3B820">Change Password</font></a>
+                    </div>
+                </div>-->
+
+
+
+            
+            {% if user.is_authenticated %}
+            
+                {% csrf_token %}
+                <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            
+                <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+            {% endif %}
+            
+        </h3>
+        </header>
+
+        
+        <div class="div1">
+            
+            <br><br><br><br><br>
+            <h1>Enjoy Our <br>Delicious meal</h1>
+            <br><br><br><br><br><br><br><br><br><br><br>
+            
+        </div>
+        <div class="menu">
+
+
+            <center><h4>Salads Pizza Burger </h4>
+            {% for i in category %}
+            <h5>{{i.cname}}</h5>
+                {% for k in subcategory %}
+                    {% if k.cid == i %}
+                    <h5>{{k.scname}}</h5><br>
+                        {% for j in menu %}
+
+                            {% if j.sub_category == k %}{% if j.status == 1  %}
+
+                                <div class="image-card-container">
+                                <div class="image-card">
+                                <img src={{ j.image.url }}>
+                                <div class="description">
+                                <h5>{{j.name}}</h5>
+                                <p>{{j.description}}</p>
+                                </div>
+                                </div>
+                            {% endif %}{% endif %}</br>
+                        {% endfor %}</br>
+                    {% endif %}</br>
+                {% endfor %}</div></br>
+            {% endfor %}</center>
+            
+
+            
+
+        </div>
+        <script src="" async defer></script>
+    </body>
+</html> {% endcomment %}
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            .div1
+            {
+                background-image:url("{% static 'myimages/chomebg.jpg'%}");
+                background-color: rgba(255, 0, 0, 0.4);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width:100%;
+                
+            }
+            .div11
+            {
+                float:right;
+            }
+            h3 
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            h1
+            {
+                font-size: 70px;
+                padding:25px;
+                color: black;
+                text-shadow: -1px 1px 1px #F3B820,
+				  1px 1px 5px #F3B820,
+				  1px -1px 0 #F3B820,
+				  -1px -1px 0 #F3B820; 
+            }
+            
+            td
+            {
+                padding:6px
+            }
+            h5
+            {
+                font-size: 20px;
+            }
+            a
+            {
+                text-decoration:none;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: rgba(255,255,255,0.5);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: rgba(255,255,255,0.5);
+            }
+            .dropbtn
+            {
+                border: none; 
+                background-color: transparent;
+            }
+            .fixed-size-image {
+                width: 200px; /* Set your desired width */
+                height: 150px; /* Set your desired height */
+            }
+
+
+
+
+            body {
+                
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+            }
+    
+            .container {
+                margin: auto;
+                width: 80%;
+                padding: 10px;
+                overflow: hidden; 
+                
+                
+  {% comment %} margin: auto;
+  width: 70%;
+  padding: 10px;
+  overflow: hidden; {% endcomment %}
+            }
+    
+            .image-container {
+                width: 23%; /* Adjust the width as needed */
+                float: left;
+                margin: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                background-color: #fff;
+                text-align: center;
+                padding: 10px;
+                border-radius: 5px;
+
+            }
+    
+            .image-container img {
+                width: 150px; /* Set your desired width */
+                height: 150px;
+                border-radius: 50%; /* Make the image circular, adjust as needed */
+            }
+    
+            .image-container p {
+                margin: 10px 0;
+                color: #333;
+            }
+            .categoryheader
+            {
+                top: 50px;
+                position: sticky;
+                background-size: cover;
+                background-color: #fff;
+                float:right;
+                width:100%
+                
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+    </head>
+    <body>
+        {% include 'c_header.html' %}
+
+        
+        <div class="div1">
+            <div class="div11">
+                
+            </div>
+            
+            <br><br><br><br><br>
+            <h1>Enjoy Our <br>Delicious meal</h1>
+            <br><br><br><br><br><br><br><br><br><br><br>
+            
+        </div>
+
+            
+
+<br>
+            {% comment %} <center><font size="+4" color="black">{% for i in category%}{% if i.status == 1%} <a href="javascript:void(0);" onclick="scrollToSection('{{ i.cname }}')" style="color: black">{{ i.cname }}&nbsp;</a>{% endif %}{% endfor %}</font></center>
+                    {% csrf_token %}
+                <table align="center">
+                    {% for i in category %}
+                        {% if i.status == 1 %}
+                            <tr><td><font size="+4" id="{{ i.cname }}">{{i.cname}}</font></tr></td>
+                            {% for k in subcategory %}
+                
+                                {% if k.cid == i %}
+                                    <tr><td><h5>{{k.scname}}</h5></td></tr><br>
+                                    {% for j in menu %}
+                                        {% if j.sub_category == k %}{% if j.status == 1  %}
+                                            <tr>
+                                                <td>    
+                                                    <img src="{{j.image.url}}" class="fixed-size-image" onclick"test()">
+                                                </td>
+                                                <td width="350px">
+                                                    <h5>{{j.name}}</h5>
+                                                    <font size="-1"><i> {{j.description}}</i></font>
+
+                                                </td>
+                                                
+                                                <td>
+                                                    <b>{{j.price}}</b>
+                                                    <br>
+
+                                                    <form method="post" action="{% url 'c_add_to_cart' j.pk %}" name="disableitem" id="disableitem">
+                                                        {% csrf_token %}
+                                                        <button type="submit" name="btn" id="btn">Add to Cart</button>
+                                                    </form>
+
+                                                    
+                                                </td>
+
+
+                                            </tr>
+                                        {% endif %}{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}</center>
+                </table>
+            </div>
+            <script>
+                function scrollToSection(sectionId) {
+                    var element = document.getElementById(sectionId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            </script>
+        </div>
+        <script src="" async defer></script> {% endcomment %}
+
+
+    
+
+
+        {% comment %} <div class="welcome-message">welcome</div> {% endcomment %}
+        <div class="menu" id="menu">
+            
+            <center>
+                <div class="categoryheader" name="categoryheader">
+                    <font size="+3" color="black">
+                        {% for i in category%}
+                            {% if i.status == 1%} 
+                                <a href="javascript:void(0);" onclick="scrollToSection('{{ i.cname }}')" style="color: black">{{ i.cname }}&nbsp;</a>
+                            {% endif %}
+                        {% endfor %}
+                    </font>
+                </div>
+                <div class="cartitemsdiv" name="cartitemsdiv">
+                    {% csrf_token %}
+                    <br><br>
+                    {% for i in category %}
+                        {% if i.status == 1 %}
+                            <font size="+4" id="{{ i.cname }}">{{i.cname}}</font>
+                            {% for k in subcategory %}
+                                {% if k.cid == i %}
+                                    <h5>{{k.scname}}</h5><br>
+                                    <div class="container">
+                                        {% for j in menu %}
+                                            {% if j.sub_category == k %}
+                                                {% if j.status == 1  %}
+                                                        <!-- Container 1 -->
+                                                    <div class="image-container">
+                                                        <img src="{{j.image.url}}" alt="Image 1">
+                                                        <p><b><font size="+1.5">{{j.name}}</font></b><br><br>{{j.description}}<br>
+                                                                <b>{{j.price}}</b>
+                                                                {% comment %} <form method="post" action="{% url 'c_add_to_cart' j.pk %}" name="disableitem" id="disableitem"> {% endcomment %}
+                                                                <form method="post" action="{% url 'c_add_to_cart' j.pk %}" name="disableitem" id="disableitem">
+                                                                    {% csrf_token %}
+                                                                    <button type="submit" name="{{j.name}}btn" id="{{j.namee}}btn">Add to Cart</button>
+                                                                </form>
+            
+                                                        </p>
+                                                    </div>
+
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </center>
+                        </div>
+                        <script>
+                            function scrollToSection(sectionId) {
+                                var element = document.getElementById(sectionId);
+                                if (element) {
+                                    element.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }
+                        </script>
+                    </div>
+
+
+
+    </body>
+
+    
+</html>

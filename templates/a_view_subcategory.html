@@ -1,0 +1,185 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        body
+        {
+            background-color:white;
+            background-size:100%;
+        }
+        form
+        {
+            border:1px solid #F3B820;
+            width:50%;
+            height:20%;
+            background-color:#343230;
+            padding:3% 5%; 
+            margin: auto;
+        }
+        .div1
+        {
+            
+            padding:1% 20%;
+        }
+        input[type=text]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=number]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        input[type=password]
+        {
+            border: 1px  solid #F3B820;
+            border-radius: 20px;
+            padding: 7px 5px;
+            margin: 2px 0;
+            width:100%;
+            background-color:#343230;
+            font-size:100%;
+            color:white;
+        }
+        label
+        {
+            font-size:100%;
+            color:#F3B820;
+            text-align:left;
+        }
+        button
+        {
+            background-color:#F3B820;
+            text-align:center;
+            font-size:100%;
+            padding:10px 10px;
+            border-radius: 20px;
+            width:35%;
+            color:black;
+        }
+        #logout {
+            margin-left: 850px;
+            padding: 1px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 50%;
+          }
+          
+          th, td {
+            text-align: left;
+            padding: 8px;
+          }
+          th
+          {
+            background-color: black;
+            color:white;
+          }
+          tr:nth-child(even) {
+            background-color: #D6EEEE;}
+
+        adiv
+        {
+            border: 5px outset red;
+  background-color: lightblue;
+  text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Sidebar -->
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <!-- <h1>Admin</h1> -->
+        {% comment %} <div id="logout">
+            <h3>
+            {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>
+            {% endif %}
+            </h3><br><br>
+        </div> {% endcomment %}
+        <div id="adddiv" style="color:blak;font-size:16px;">
+            <a href="{% url 'a_add_subcategory' category.pk %}" id="adiv" style="padding:10px 10px;">Add subcategory</a>
+        </div>
+        <center><h1>Sub categories of {{category.cname}}: </h1></center><br>
+        <font size="+2" border=1px solid yellow>
+        {% comment %} <ul style="list-style-type:disc;"> {% endcomment %}
+        <table border=1px solid black align="center" width="40%">
+        
+        {% for subcat in subcats %}
+        <tr>
+        <td>
+        <a href="{% url 'a_edit_subcategory' subcat.pk %}"><li>{{subcat.scname}}</li></a>
+        </td>
+    </tr>
+        {% endfor %}
+    
+    {% comment %} </ul> {% endcomment %}
+</table>
+</font>
+    </div>
+</body>
+
+</html>

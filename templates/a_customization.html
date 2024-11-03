@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <style>
+            #content {
+                margin-left: 250px;
+                padding: 20px;
+            }
+            table {
+                width: 100%;
+              }
+              
+              th {
+                height: 50px;
+              }
+              td {
+                height: 100px;
+                text-align:center;
+              }
+              .fixed-size-image {
+                width: 100px; /* Set your desired width */
+                height: 75px; /* Set your desired height */
+            }
+        </style>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        {% include 'a_sidebar.html'%}
+        <div id="content">
+        {% if not menu%}
+        <br><br><br><br><br><br><br><br><br><br><br><h1><center>No Menu Items</center></h1>
+        {% endif %}
+        {% if menu %}
+
+        <center><h2>Menu Items</h2></center>
+        <table align="center" height="550%" border=2px soid black>
+            <tr>
+                
+                <th>Name</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Image</th>
+                <th>Cusomization</th>
+            </tr>
+            {% for item in menu %}
+            <tr>
+                {% if item.status == 1%}
+                <td width="19%">{{item.name}}</td>
+                <td width="19%">{{item.cid}}</td>
+                <td width="19%">{{item.sub_category}}</td>
+                <td width="20%"><img src="{{ item.image.url }}" alt="{{ item.name }}" class="fixed-size-image"></td>
+                <td>
+                    <form method="post" action="{% url 'a_view_customization' item.pk %}" name="view_customization" id="view_customization">
+                        {% csrf_token %}
+                        <button type="submit">Customize</button>
+                    </form>
+                </td>
+
+                
+                    
+                    <!--<td>{{item.status}}</td>
+                    <td><a href="">Edit</a></td>
+                    <td><a href="">Delete</a></td>-->
+                {% endif %}
+            </tr>   
+            {% endfor %}
+        </table> 
+
+        {% endif %}
+    </div>
+        <script src="" async defer></script>
+    </body>
+</html>

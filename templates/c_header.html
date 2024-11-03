@@ -1,0 +1,82 @@
+
+<style>
+
+    header
+            {
+                top: 0;
+                position: sticky;
+                background-size: cover;
+                background-color: black;
+                float:right;
+                width:100%
+                
+            }
+            h4
+            {
+                word-spacing: 30px;
+                font-size: 30px;
+            }
+            h3,astyle
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+            }
+            .astyle
+            {
+                word-spacing: 30px;
+                color:#F3B820;
+                text-shadow: 2px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+                float:right;
+                text-decoration:none;
+            }
+        </style>
+<header>
+    <h3>
+
+        {% if user.is_authenticated %}
+    
+        {% csrf_token %}
+        <a href="{% url 'logout_user' %}" class="astyle">    LOGOUT  </a>
+    
+        <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+        {% endif %}
+        <a href="{% url 'customerprofile' %}" class="astyle" name="profile">PROFILE&nbsp;</a>
+        {% comment %} <a href="{% url 'chome' %}" class="astyle">CONTACT&nbsp;</a> {% endcomment %}
+        <a href="{% url 'c_table_reservation' %}" class="astyle" name="reservation">RESERVATION&nbsp;</a>
+        {% comment %} <a href="{% url 'c_calorie_detection' %}" class="astyle" name="profile">DETECTCALORIE&nbsp;</a> {% endcomment %}
+        <a href="{% url 'c_order_view' %}" class="astyle">ORDERS&nbsp;</a>
+        <a href="{% url 'c_cart_view' %}" class="astyle">CART&nbsp;</a>  
+        <a href="{% url 'chome' %}#menu" class="astyle">MENU&nbsp;</a> 
+        {% comment %} <a href="{% url 'chome' %}" class="astyle">SERVICE&nbsp;</a>  {% endcomment %}
+        {% comment %} <a href="{% url 'chome' %}" class="astyle">ABOUT&nbsp;</a>    {% endcomment %}
+        <a href="{% url 'chome' %}" class="astyle">HOME&nbsp;</a>   
+         
+             
+          
+         
+        
+        
+        
+        <!--<div class="dropdown">
+            <button class="dropbtn"><font size="+1" color="#F3B820">PROFILE  </font></button>
+            <div class="dropdown-content">
+                <a href="{% url 'customerprofile' %}"><font size="+1" color="#F3B820">Edit</a>
+                <a href="{% url 'changepassword' %}"><font size="+1" color="#F3B820">Change Password</font></a>
+            </div>
+        </div>-->
+
+
+
+    
+    {% comment %} {% if user.is_authenticated %}
+    
+        {% csrf_token %}
+        <a href="{% url 'logout_user' %}" >    LOGOUT  </a>
+    
+        <!--<a href="{% url 'logout_user' %}" style="color:#F3B820;">LOGOUT  </a>-->
+    {% endif %} {% endcomment %}
+    
+</h3>
+</header>

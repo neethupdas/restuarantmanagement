@@ -1,0 +1,196 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some default styles for cleaner presentation */
+        body, h1, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the sidebar */
+        #sidebar {
+            background-color: #333;
+            color: white;
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+        }
+
+        #sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        /* Style the content area */
+        #content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+          }
+          
+          th {
+            height: 50px;
+          }
+          td {
+            height: 100px;
+            text-align:center;
+          }
+          .fixed-size-image {
+            width: 100px; /* Set your desired width */
+            height: 75px; /* Set your desired height */
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+
+
+    {% include 'a_sidebar.html' %}  <!-- Include the sidebar template -->
+    <div id="content">
+        <!-- Content of your admin dashboard goes here -->
+    </div>
+
+    <!-- Content area -->
+    <div id="content">
+        <center><h1>MENU</h1>
+            
+            <form method="get" action="{% url 'a_search_menu' %}">
+                <input type="text" name="q" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        
+        </center>
+        <font size="+1" color="white">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="messages" id="msg" >
+                        {{message}}
+                    </div>
+                    <script>
+                        // Add JavaScript to hide the message after 5 seconds
+                        setTimeout(function () {
+                            var messagesContainer = document.querySelector('.messages');
+                            if (messagesContainer) {
+                                messagesContainer.style.display = 'none';
+                            }
+                        }, 5000); // 5000 milliseconds = 5 seconds
+                    </script>
+                {% endfor %}
+                
+            {% endif %}
+        </font>
+        <center><h2>Enabled Menu Items</h2></center>
+        <table align="center" height="550%" border=2px soid black>
+            <tr>
+                
+                <th>Name</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Edit</th>
+                
+            </tr>
+            {% for item in items %}
+            <tr>
+                {% if item.status == 1%}
+                <td width="13%">{{item.name}}</td>
+                <td>{{item.cid}}</td>
+                <td>{{item.sub_category}}</td>
+                <td width="30%">{{item.description}}</td>
+                <td width="15%"><img src="{{ item.image.url }}" alt="{{ item.name }}" class="fixed-size-image"></td>
+                <td>{{item.price}}</td>
+                <td>
+                    <form method="post" action="{% url 'a_status_menu' item.pk %}" name="disableitem" id="disableitem">
+                        {% csrf_token %}
+                        <button type="submit">Disable</button>
+                    </form>
+                </td>
+
+                
+                    
+                    <!--<td>{{item.status}}</td>
+                    <td><a href="">Edit</a></td>
+                    <td><a href="">Delete</a></td>-->
+                <td>
+                    <form method="post" action="{% url 'a_edit_menu_item' item.pk %}" name="MenutblEditForm" id="MenutblEditForm">
+                        {% csrf_token %}
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+                <td><a href="#"></a></td>
+                {% endif %}
+            </tr>   
+            {% endfor %}
+        </table> 
+        
+        <center><h2>Disabled Menu Items</h2></center>
+        <table align="center" height="550%" border=2px soid black>
+            <tr>
+                
+                <th>Name</th>
+                <th>Category</th>
+                <th>Subcategory</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Edit</th>
+                
+            </tr>
+            {% for item in items %}
+            <tr>
+                {% if item.status == 0%}
+                <td width="13%">{{item.name}}</td>
+                <td>{{item.cid}}</td>
+                <td>{{item.sub_category}}</td>
+                <td width="30%">{{item.description}}</td>
+                <td width="15%"><img src="{{ item.image.url }}" alt="{{ item.name }}" class="fixed-size-image"></td>
+                <td>{{item.price}}</td>
+                <td>
+                    <form method="post" action="{% url 'a_status_menu' item.pk %}" name="disableitem" id="disableitem">
+                        {% csrf_token %}
+                        <button type="submit">Enable</button>
+                    </form>
+                </td>
+
+                
+                    
+                    <!--<td>{{item.status}}</td>
+                    <td><a href="">Edit</a></td>
+                    <td><a href="">Delete</a></td>-->
+                <td>
+                    <form method="post" action="{% url 'a_edit_menu_item' item.pk %}" name="MenutblEditForm" id="MenutblEditForm">
+                        {% csrf_token %}
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+                <td><a href="#"></a></td>
+                {% endif %}
+            </tr>   
+            {% endfor %}
+        </table> 
+
+        
+    </div>
+</body>
+
+
+</html>

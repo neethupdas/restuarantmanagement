@@ -1,0 +1,380 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <style>
+            body
+            {
+                background-image:url("{% static 'myimages/bg3.jpg'%}");
+                background-size:100%;
+            }
+            form
+			{
+				border:1px solid black;
+				width:50%;
+                height:20%;
+				background-color:#343230;
+                padding:3% 5%;   
+			}
+            .div1
+            {
+                
+                padding:1% 20%;
+            }
+            input[type=text]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=email]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            input[type=password]
+            {
+                border: 1px  solid #F3B820;
+                border-radius: 20px;
+                padding: 7px 5px;
+                margin: 2px 0;
+                width:100%;
+                background-color:#343230;
+                font-size:100%;
+                color:white;
+            }
+            label
+            {
+                font-size:100%;
+                color:#F3B820;
+            }
+            button
+            {
+                background-color:#F3B820;
+                text-align:center;
+                font-size:100%;
+                padding:10px 10px;
+                border-radius: 20px;
+                width:35%;
+                color:black;
+            }
+        </style>
+        <script>
+            function usernameval()
+            {
+                //alert("enter user");
+                var username=document.getElementById('username').value;
+                var errorMessage=document.getElementById('up');
+
+                var m=document.getElementById('email');
+                var phone=document.getElementById('phone');
+                var address=document.getElementById('address');
+                var password=document.getElementById('password');
+                var cpassword=document.getElementById('cpassword');
+                var spaceRegex = /\s/;
+
+                const btn=document.getElementById('btn');
+                if(username==null || username=="")
+                {
+                    document.getElementById('up').innerHTML="Username can't be null"
+                    btn.disabled=true;
+
+                }
+                else if(spaceRegex.test(username)) {
+                    document.getElementById('up').innerHTML="Username can't be null";
+                    btn.disabled=true;
+                    m.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;// Prevent form submission
+                }
+                else if(username.length<4)
+                {
+                    document.getElementById('up').innerHTML='Username must be at least 4 characters long';
+                    btn.disabled=true;
+                    m.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if((username.replace(/[^0-9]/g,"").length) > ((username.length)-3))
+                {
+                    document.getElementById('up').innerHTML='Username must contains at least 3 alphebets';
+                    btn.disabled=true;
+                    m.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(username.length>3 && username.length<16)
+                {
+                    document.getElementById('up').innerHTML="";
+                    btn.disabled=false;
+                    m.disabled=false;
+                    phone.disabled=false;
+                    address.disabled=false;
+                    password.disabled=false;
+                    cpassword.disabled=false;
+                }
+                else if(username.length >15)
+                {
+                    document.getElementById('up').innerHTML = 'Username must be less than 15 characters'; // Clear the error message
+                    btn.disabled=true;
+                    m.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+            }
+            function mailval()
+            {
+                var m=document.getElementById('email').value;
+                var errorMessage = document.getElementById('ep');
+
+                var phone=document.getElementById('phone');
+                var address=document.getElementById('address');
+                var password=document.getElementById('password');
+                var cpassword=document.getElementById('cpassword');
+
+                const btn=document.getElementById("btn");
+                var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+                //alert(m);
+                if(m==null || m=="")
+                {
+                    document.getElementById('ep').innerHTML="Enter the email id";
+                    btn.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(! regex.test(m)) 
+                {
+                    document.getElementById('ep').innerHTML="Enter the email id format";
+                    btn.disabled=true;
+                    phone.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('ep').innerHTML="";
+                    btn.disabled=false;
+                    phone.disabled=false;
+                    address.disabled=false;
+                    password.disabled=false;
+                    cpassword.disabled=false;
+                }
+            }
+            function phoneval()
+            {
+                var phone=document.getElementById('phone').value;
+                var errorMessage=document.getElementById('pp');
+
+                var address=document.getElementById('address');
+                var password=document.getElementById('password');
+                var cpassword=document.getElementById('cpassword');
+                //alert("Enter");
+                const btn=document.getElementById('btn');
+                const reg=/^[6-9]\d{9}$/
+                if(! reg.test(phone))
+                {
+                    document.getElementById('pp').innerHTML="Invalid Phone number";
+                    btn.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(phone.length != 10)
+                {
+                    document.getElementById('pp').innerHTML="Phone number should contains 10 digits";
+                    btn.disabled=true;
+                    address.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('pp').innerHTML="";
+                    btn.disabled=false;
+                    address.disabled=false;
+                    password.disabled=false;
+                    cpassword.disabled=false;
+                }
+            }
+            function addressval()
+            {
+                var address=document.getElementById('address').value;
+                var ap=document.getElementById('ap');
+
+                var password=document.getElementById('password');
+                var cpassword=document.getElementById('cpassword');
+
+                const btn=document.getElementById('btn')
+                if(address.length<15 || address.length>50)
+                {
+                    document.getElementById('ap').innerHTML="Enter a valid address";
+                    btn.disabled=true;
+                    password.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('ap').innerHTML="";
+                    btn.disabled=false;
+                    password.disabled=false;
+                    cpassword.disabled=false;
+                }
+            }
+            function passwordval()
+            {
+                
+                var password=document.getElementById('password').value;
+                var errorMessage=document.getElementById('passp');
+                
+                var cpassword=document.getElementById('cpassword');
+
+                const btn=document.getElementById('btn');
+                var lower=/^(?=.*[a-z])/
+                var upper=/(?=.*[A-Z])/
+                var num=/^(?=.*[0-9])/
+                var special=/^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹])/;
+                
+                if(! upper.test(password))
+                {
+                    document.getElementById('passp').innerHTML="Password should contains one CAPITAL LETTER";
+                    btn.disabled=true;
+                    cpassword.disabled=true;
+                }
+                //alert("enter");
+                else if(! lower.test(password))
+                {
+                    document.getElementById('passp').innerHTML="Password should contains one LOWERCASE LETTER";
+                    btn.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(! num.test(password))
+                {
+                    document.getElementById('passp').innerHTML="Password should contains one DIGTI";
+                    btn.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(! special.test(password))
+                {
+                    document.getElementById('passp').innerHTML="Password should contains one SPECIAL CHARECTER";
+                    btn.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else if(password.length<8 || password.length>15)
+                {
+                    document.getElementById('passp').innerHTML="Your password must contains minimum 8 characters and maximum 15 charecters";
+                    btn.disabled=true;
+                    cpassword.disabled=true;
+                }
+                else 
+                {
+                    document.getElementById('passp').innerHTML="";
+                    btn.disabled=false;
+                    cpassword.disabled=false;
+                }
+            }
+            function cpasswordval()
+            {
+                var cpassword=document.getElementById('cpassword').value;
+                var password=document.getElementById('password').value;
+                var errorMessage=document.getElementById('cpassp');
+                const btn=document.getElementById('btn')
+                if(cpassword != password)
+                {
+                    document.getElementById('cpassp').innerHTML="Password and Confirm password should be same.";
+                    btn.disabled=true;
+                }
+                else
+                {
+                    document.getElementById('cpassp').innerHTML="";
+                    btn.disabled=false;
+                }
+            }
+        </script>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+            <div class="div1">
+                <form action="" name="signupform" method='POST'>
+                    {% csrf_token %}
+                    <center><b><font size="+1" color="white">Sign Up</font></b><br></center><br><br>
+
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} m-2" id="msg" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!--<input type="radio" id="customer" name="category" value=1 Required>
+                    <label for="customer">Iam a customer</label>
+                    <input type="radio" id="staff" name="category" value=2 Required>
+                    <label for="staff">Iam not a customer</label><br><br>-->
+
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" oninput="usernameval()" Required>
+                    <p id="up" style="color: #f7e6b5; font-size:75%"></p>
+
+                    <label for="email">Email id:</label>
+                    <input type="email" name="email" id="email" oninput="mailval()" Required>
+                    <p id="ep" style="color: #f7e6b5; font-size:75%"></p>
+
+                    <label for="phone">Phone:</label>
+                    <input type="text" name="phone" id="phone" oninput="phoneval()" Required>
+                    <p id="pp" style="color: #f7e6b5; font-size:75%"></p>
+        
+                    <label for="address">Address:</label>
+                    <input type="text" name="address" id="address" oninput="addressval()" Required>
+                    <p id="ap" style="color: #f7e6b5; font-size:75%"></p>
+
+                    
+        
+                    
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" oninput="passwordval()" Required>
+                    <p id="passp" style="color: #f7e6b5; font-size:75%"></p>
+        
+                    <label for="cpassword">Confirm Password:</label>
+                    <input type="password" name="cpassword" id="cpassword" oninput="cpasswordval()" Required>
+                    <p id="cpassp" style="color: #f7e6b5; font-size:75%"></p>
+        
+                    <center><button type="submit" name="btn" id="btn"><font style="color:black;">SignUp</font></button></center>
+                    <br>
+                    <center><a href="{% url 'loginpage' %}" style="color:#F3B820;"><font>Already have an account? Login</font></a></center>
+                </form>
+            </div>
+        <script src="" async defer></script>
+    </body>
+</html>
